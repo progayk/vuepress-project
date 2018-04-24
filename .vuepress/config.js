@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'My Documentation',
+    title: 'My Documentations',
     description: 'Document information for site',
     themeConfig: {
         search: true,
