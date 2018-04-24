@@ -1,5 +1,9 @@
-# Hello
+---
+navbar: true
 
-## h2
+---
+# Keep your Documentation AWESOME!
 
-[link somewhere](http://yahoo.com)
+## Vuepress Journey
+
+[Vuepress Docs](https://vuepress.vuejs.org/ "goes to vuepress documentation")
