@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2aae14a5-7f90-452f-99e7-9af79ee092b1" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.vuepress/components/MyComp.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vuepress/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/.vuepress/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/guides/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/guides/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/info/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/info/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -36,10 +34,19 @@
         <entry file="file://$PROJECT_DIR$/guides/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="399">
-                <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+              <first_editor relative-caret-position="300">
+                <caret line="83" column="2" selection-start-line="83" selection-start-column="2" selection-end-line="83" selection-end-column="2" />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyComp.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.vuepress/components/MyComp.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -71,6 +78,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -83,6 +91,7 @@
         <option value="$PROJECT_DIR$/info/README.md" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.vuepress/config.js" />
+        <option value="$PROJECT_DIR$/.vuepress/components/MyComp.vue" />
         <option value="$PROJECT_DIR$/guides/README.md" />
       </list>
     </option>
@@ -116,6 +125,12 @@
               <item name="vuepress-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="vuepress-project" type="462c0819:PsiDirectoryNode" />
               <item name=".vuepress" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vuepress-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vuepress-project" type="462c0819:PsiDirectoryNode" />
+              <item name=".vuepress" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="vuepress-project" type="b2602c69:ProjectViewProjectNode" />
@@ -167,12 +182,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1524602866182</updated>
-      <workItem from="1524602867522" duration="6104000" />
+      <workItem from="1524602867522" duration="6912000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6104000" />
+    <option name="totallyTimeSpent" value="6912000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1408" y="46" width="1479" height="1010" extended-state="0" />
@@ -231,11 +246,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.vuepress/components/MyComp.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/guides/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="399">
-            <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+          <first_editor relative-caret-position="300">
+            <caret line="83" column="2" selection-start-line="83" selection-start-column="2" selection-end-line="83" selection-end-column="2" />
           </first_editor>
           <second_editor />
         </state>

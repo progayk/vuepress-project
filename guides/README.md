@@ -51,5 +51,42 @@ module.exports = {
     }
 }
 ```
+## Add Vue components
+
+Since this is a vue powered kind a documentation framework we can use Vue components inside it. 
+Add a components directory into `.vuepress`. Create a new `.vue` file inside of the ./components dir.
+Then add your vue component into `guides/README.md` file like so:
+
+```html
+<my-comp></my-comp>
+```
+
+::: warning
+When you add a new component you have to stop and rerun the dev 
+:::
+
+The following actually comes from a vue component. Isn't it awesome!
+
+<my-comp></my-comp>
+
+## Vue directives inside .md file
+
+You can also use vue directives right inside and `.md` file. Another cool feature.
+
+```html
+<ul>
+    <li v-for="n in 5">
+        {{ n }}
+    </li>
+</ul>
+```
+
+**The result will be:**
+
+<ul>
+    <li v-for="n in 5">
+        {{ n }}
+    </li>
+</ul>
 
 
