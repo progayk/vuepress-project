@@ -1,9 +1,10 @@
 ---
 navbar: true
 next: ./guides/
-prev: falsed
+prev: false
 sidebarDepth: 2
 ---
+
 # Keep your Documentation AWESOME!
 
 ## Vuepress Journey

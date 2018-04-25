@@ -1,4 +1,8 @@
 ---
-title: 'Info'
+title: Info
+sidebarDepth: 2
 ---
-# Here is important information
+
+# Info
+
+Here is important information
