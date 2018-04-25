@@ -225,3 +225,40 @@ You can also use vue directives right inside and `.md` file. Another cool featur
 </ul>
 
 
+## Asset Handling
+
+### Relative URLs
+
+All markdown files are compiled into Vue components and processed by webpack, therefore you can and should prefer referencing any asset using relative URLs:
+
+```markdown
+![An image](./image.png)
+```
+
+This would work the same way as in `*.vue` file templates. The image will be processed with `url-loader` and `file-loader`, and copied to appropriate locations in the generated static build.
+
+In addition, you can use the `~` prefix to explicitly indicate this is a webpack module request, allowing you to reference files with webpack aliases or from npm dependencies:
+
+```markdown
+![Image from alias](~@alias/image.png)
+![Image from dependency](~some-dependency/image.png)
+```
+
+webpack aliases can be configured via [configureWebpack](https://vuepress.vuejs.org/config/#configurewebpack) in `.vuepress/config.js.` Example:
+
+```javascript
+module.exports = {
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@alias': 'path/to/some/dir'
+      }
+    }
+  }
+}
+```
+
+::: danger ACI GERCEK
+I couldn't add `webpackConfigure` to `config.js` file. :'(
+:::
+

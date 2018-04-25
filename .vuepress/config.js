@@ -37,7 +37,8 @@ module.exports = {
                 'vuepress-docs',
                 'git-docs',
                 'firebase-docs',
-                'firebase-friendlyeats-web'
+                'firebase-friendlyeats-web',
+                'firebase-vue-authentication'
             ],
             '/info/': [
                 ''
@@ -46,6 +47,5 @@ module.exports = {
                 ''
             ]
         }
-
     }
 }

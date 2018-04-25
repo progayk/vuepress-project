@@ -1,5 +1,5 @@
 ---
-title: Firebase Restaurant Recomendation App (not finished)
+title: Firebase Restaurant Recomendation App (on dev)
 sidebarDepth: 3
 ---
 
