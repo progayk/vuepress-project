@@ -2,7 +2,9 @@
 title: Vuepress Docs
 ---
 
-# Guides
+# Vuepress Docs
+
+Some of the content in this site is directly copied from [vuepress.vuejs.org](https://vuepress.vuejs.org/).
 
 ## First things first
 
@@ -14,8 +16,9 @@ module.exports = {
     description: 'Document information for site'
 }
 ```
+## Navbar
 
-## Add navigation function to navbar 
+### Navbar Links 
 
 Here we are going to add `nav` function to navbar. You can name the link `items` as you wish and they will appear on the
 top right corner.
@@ -34,7 +37,47 @@ module.exports = {
 }
 ```
 
-## Add sidebar
+These links can also be dropdown menus if you provide an array of `items` instead of a `link`:
+
+```javascript{3,4,5,6,7,8,9,10,11}
+module.exports = {
+  themeConfig: {
+    nav: [
+      {
+        text: 'Languages',
+        items: [
+          { text: 'Chinese', link: '/language/chinese' },
+          { text: 'Japanese', link: '/language/japanese' }
+        ]
+      }
+    ]
+  }
+}
+```
+::: tip FACT
+In this site above option is used.
+:::
+
+In addition, you can have sub groups inside a dropdown by having nested items:
+
+```javascript{3,4,5,6,7,8,9,10,11}
+module.exports = {
+  themeConfig: {
+    nav: [
+      {
+        text: 'Languages',
+        items: [
+          { text: 'Group1', items: [/*  */] },
+          { text: 'Group2', items: [/*  */] }
+        ]
+      }
+    ]
+  }
+}
+```
+
+
+## Sidebar
 This will automatically add a sidebar with specified routes and with their sub H1 tags.
 
 ```js
@@ -49,7 +92,7 @@ module.exports = {
 }
 ```
 
-## Sidebar Groups
+### Sidebar Groups
 
 You can divide sidebar links into multiple groups by using objects:
 
@@ -74,7 +117,7 @@ module.exports = {
 }
 ```
 
-## Multiple Sidebars
+### Multiple Sidebars
 
 Display different sidebars for different sections of content:
 
@@ -100,10 +143,48 @@ module.exports = {
   }
 }
 ```
+::: warning
+Make sure to define the fallback configuration last.
+
+VuePress checks each sidebar config from top to bottom. If the fallback configuration was first, 
+VuePress would incorrectly match `/foo/` or `/bar/four.html` because they both start with `/`.
+:::
 
 ::: tip FACT
 In this site you're displaying **multiple sidebars** is used.
 :::
+
+## Search Box
+
+### Built-in Search
+
+You can costumize the search bar by defining how many suggestions to be shown with `themeConfig.searchMaxSuggestions`,
+and also disable the search, which is not necessary:
+
+```javascript
+module.exports = {
+  themeConfig: {
+    search: false,
+    searchMaxSuggestions: 10
+  }
+}
+```
+
+### Algolia Search
+
+The `themeConfig.algolia` option allows you to use [Algolia DocSearch](https://community.algolia.com/docsearch/) to replace the simple built-in search. 
+To enable it, you need to provide at least `apiKey` and `indexName`:
+
+```javascript
+module.exports = {
+  themeConfig: {
+    algolia: {
+      apiKey: '<API_KEY>',
+      indexName: '<INDEX_NAME>'
+    }
+  }
+}
+```
 
 ## Add Vue components
 
@@ -123,7 +204,7 @@ The following actually comes from a vue component. Isn't it awesome!
 
 <my-comp></my-comp>
 
-## Vue directives inside .md file
+### Vue directives inside .md file
 
 You can also use vue directives right inside and `.md` file. Another cool feature.
 

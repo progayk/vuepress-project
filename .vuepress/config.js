@@ -5,19 +5,32 @@ module.exports = {
         search: true,
         searchMaxSuggestions: 10,
         nav: [
-            { text: 'Home', link: '/' },
-            { text: 'Guides', link: '/guides/' },
-            // { text: 'Git Docs', link: '/guides/git/' },
-            { text: 'Info', link: '/info/' }
+            {
+                text: 'Home',
+                link: '/'
+            },
+            {
+                text: 'Guides',
+                items: [
+                    {
+                        text: 'Vuepress Docs',
+                        link: '/guides/vuepress-docs',
+                    },
+                    {
+                        text: 'Git Docs',
+                        link: '/guides/git-docs'
+                    },
+                    {
+                        text: 'Firebase Docs',
+                        link: '/guides/firebase-docs'
+                    }
+                ],
+            },
+            {
+                text: 'Info',
+                link: '/info/'
+            }
         ],
-        // sidebar: [
-        //     '/',
-        //     '/guides/',
-        //     '/guides/git/',
-        //     '/guides/firebase/',
-        //     '/guides/firebase/friendlyeats-project/',
-        //     '/info/'
-        // ],
         sidebar: {
             '/guides/': [
                 '',
@@ -33,27 +46,6 @@ module.exports = {
                 ''
             ]
         }
-        // sidebar: [
-        //     {
-        //         title: 'Home',
-        //         children: [
-        //             '/'
-        //         ]
-        //     },
-        //     {
-        //         title: 'Guides',
-        //         collapsable: false,
-        //         children: [
-        //             '/guides/'
-        //         ]
-        //     },
-        //     {
-        //         title: 'Info',
-        //         children: [
-        //             '/info/'
-        //         ]
-        //     }
-        // ]
 
     }
 }

@@ -1,11 +1,11 @@
 ---
-title: Firebase Restaurant Recomendation App
+title: Firebase Restaurant Recomendation App (not finished)
 sidebarDepth: 3
 ---
 
 # Restaurant Recomendation App Tutorial
 
-[Link](https://codelabs.developers.google.com/codelabs/firestore-web/#0) to the tutorial.
+This tutorial originally resides on [this link](https://codelabs.developers.google.com/codelabs/firestore-web/#0).
 
 ## Overview
 ### Goals
@@ -49,7 +49,9 @@ Our Web app template is configured to automatically pull your project's configur
 firebase use --add
 ```
 
-You'll be prompted to give this project an alias. This is useful if you have multiple environments (production, staging, etc). However, for this example, let's just name it "default". Now we can use:
+You'll be prompted to give this project an alias. This is useful if you have multiple environments 
+(production, staging, etc). However, for this example, let's just name it "default". Now we can use:
+
 ```bash
 firebase serve
 ``` 
