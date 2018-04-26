@@ -6,7 +6,7 @@ sidebarDepth: 3
 # Firebase + Vue2 Authentication System
 
 This tutorial contains resources from
-[this tutorial](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c).
+[this tutorial](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c) on [meduim](https://medium.com).
 
 In this tutorial, we will see how to quickly build a
 web application with an authentication system using Vue 2, vue-router and Firebase.
@@ -544,7 +544,11 @@ npm install ——save firebase
 ```
 
 Once the installation is done, let’s import Firebase module to our app. I created a new file
-inside `config/` directory called `firebase-config.js`, and inside it I put the configuration that I copied from firebase console.
+inside `config/` directory called `firebase-config.js`, and inside it I put the configuration that I copied from firebase console. 
+
+::: danger WARNING!
+On production environment you should put the configuration code in to specific config directory to avoid security vulnaribilities.
+:::
 
 ```javascript
 module.exports = {
@@ -572,3 +576,138 @@ Vue.config.productionTip = false
 firebase.initializeApp(firebaseConfig.FIREBASE_CONFIG)
 // omitted for brevity
 ```
+
+Now, everything is ready to create new users on Firebase.
+
+### Create users on Firebase with the AppSignup component
+
+Go to `AppSignup` component and implement what we need to create users on Firebase.
+
+To create a new user, we will need to get back the `email` and the `password` typed in our form inside our component controller. To do so, we are going to use the `v-model` directive of Vue 2.
+
+::: tip
+You can use the `v-model` directive to create two-way data bindings on form input and textarea elements. It automatically picks the correct way to update the element based on the input type. Although a bit magical, v-model is essentially syntax sugar for updating data on user input events, plus special care for some edge cases.
+
+from [Vue 2 documentation](https://vuejs.org/v2/guide/forms.html)
+:::
+
+Once we retrieved the email and the password of the new user we want to create, we are going to use the Firebase function called `createUserWithEmailAndPassword`.
+
+This Firebase function does exactly what the name says, it creates a new user with an email and a password. Get more information about this function in the official [Firebase documentation](https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createUserWithEmailAndPassword).
+
+Add these to `AppSignup` component:
+
+```html
+
+<script>
+import firebase from 'firebase'
+export default {
+  name: 'AppSignup',
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    signUp: function () {
+      firebase.auth(createUserWithEmailAndPassword(this.email, this.password).then(
+        function (user) {
+          alert('Tour account has been created!')
+        },
+        function (err) {
+          alert('Oops, ' + err.message)
+        }
+      ))
+    }
+  }
+}
+</script>
+
+```
+
+The `createUserWithEmailAndPassword` function return a Firebase promise, with an `onResolve` and `onReject` callback. You can know more about the different type of Firebase promises [here](https://firebase.google.com/docs/reference/js/firebase.Promise).
+
+For the moment, we just display an alert to see the result of the function.
+
+Let’s try to create a new user in the interface.
+
+
+When I fill the email and password area and hit enter I got an error that says **Oops, The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section.** Now, let's figure it out why.
+
+To have the possibility to create new user, we should enable the sign-in provider of Firebase. Let’s go back to the Firebase console, on the project we created.
+
+On the `Authentication` part, we have a tab named `SET UP SIGN-IN METHOD`
+
+![setup-signin-method](../images/setup-signin-method.png)
+
+Enable only the `Email/Password` provider.
+
+![enable-only-mail-passwd-provider](../images/enable-only-mail-passwd-provider.png)
+
+Then you will see:
+
+![mail-password-provider-enabled](../images/mail-password-provider-enabled.png)
+
+Then, let’s try again to create a new user in our Vue app.
+
+![create-account](../images/create-account.png)
+
+Hurraay! we get an alert that says: **Your account has been created!** It’s working now ! Congrats, you just created an new user in your Firebase project!
+
+If I try to sign up with same email it will throw an error like:
+
+![mail-already-in-use](../images/mail-already-in-use.png)
+
+To be sure that everything was correct, we can take a look in the firebase console, under Authentication part and see the list of users. You should have the user you just created in the list !
+
+![fb-auth-page](../images/fb-auth-page.png)
+
+### Login with the new user
+
+Now, we have a new user created, let’s try to login with this user! (When you successfully create a new user on Firebase, it automatically sign in the user in to the application, but for this example, we are going to sign in again from the `AppLogin` view)
+
+Let’s go back to our `AppLogin` component. We need to get back the email and the password of the user who try to login, and sign in this user into Firebase. This component will look like the `AppSignup` component, but the change will be the function we will call. To sign in a user in Firebase, we are going to use the `signInWithEmailAndPassword` function provided by Firebase. It takes the email and password as parameters and return a Firebase promise.
+
+```html
+<!-- omitted for brevity -->
+
+              <input class="input is-danger is-rounded" type="email" v-model="email" placeholder="your_mail@">
+
+              <!-- omitted for brevity -->
+
+              <input class="input is-info is-rounded" v-model="password" type="password" placeholder="password" autofocus>
+
+             <!-- omitted for brevity -->
+
+<script>
+import firebase from 'firebase'
+export default {
+  name: 'AppLogin',
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    signIn () {
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then((user) => {
+          alert('Well done! You are now connected.')
+        })
+        .catch((err) => {
+          alert('Oops, ' + err.message)
+        })
+    }
+  }
+}
+</script>
+<!-- omitted for brevity -->
+```
+
+Then, let's go to `http://localhost:8082/#/login` and try to login with credentials that we used for creating our account.
+
+**TADAAA!**
+
+![succesfully-connected](../images/succesfully-connected.png)
