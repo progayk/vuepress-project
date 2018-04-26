@@ -53,7 +53,7 @@ The app will consist of three views, two *(Login view and Sign up view)* that we
 
 After login successfully or after a new account creation, we will be redirected to the authenticated part of the app, the Hello view.
 
-## Login and Sign Up
+## Login Page
 
 Create a new Vue component called **AppLogin** under `src/components`
 
@@ -288,3 +288,287 @@ after some experiment. I couldn't place it at the center.
 ```
 
 ![Login Page - v3](../images/vue-login-page-v3.png)
+
+By the way, this will be the design that we will continue with:
+
+![Login Page - v4](../images/vue-login-page-v4.png)
+
+## Sign up Page
+
+Create a new view `AppSignup.vue` under `src/components` directory and create a form for sign up:
+
+```html
+<template>
+  <div>
+    <section class="section">
+      <div class="container is-fluid columns is-centered">
+        <div class="column is-one-quarter">
+          <!--<h3 class="title">Sign up</h3>-->
+          <div class="field">
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-success is-rounded" type="text" placeholder="username" autofocus>
+              <span class="icon is-small is-left">
+      <i class="fas fa-user"></i>
+    </span>
+              <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+            </div>
+            <!--<p class="help is-success">This username is available</p>-->
+          </div>
+
+          <div class="field">
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-info is-rounded" type="password" placeholder="password" autofocus>
+              <span class="icon is-small is-left">
+      <i class="fas fa-lock"></i>
+    </span>
+              <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-danger is-rounded" type="email" placeholder="your_mail@">
+              <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+              <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+            </div>
+            <!--<p class="help is-danger">This email is invalid</p>-->
+            <label class="checkbox">
+              <input type="checkbox">
+              I agree to the <a href="#">terms and conditions</a>
+            </label>
+          </div>
+          <div class="buttons is-centered">
+            <a class="button is-outlined is-primary is-rounded">Submit</a>
+            <router-link to="/login"><a class="button is-outlined is-info is-rounded">Login</a></router-link>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'AppSignup',
+  data () {
+    return {}
+  },
+  methods: {}
+}
+</script>
+
+<style lang="scss">
+  @import '~bulma/bulma';
+  label {
+    margin-top: 20px;
+  }
+</style>
+```
+
+![vue-signup-page-v0](../images/vue-signup-page-v0.png)
+
+## Navigation between views
+
+If we look back to the schema of the app architecture we defined, we can navigate from the Login view to the SignUp view, and from those two views to the Hello view. How to do so?
+
+Well, we will use another component of **vue-router** called `router-link`.
+
+::: tip INFO
+`<router-link>` is the component for enabling user navigation in a router-enabled app. The target location is specified with the to prop. It renders as an `<a>` tag with correct href by default, but can be configured with the tag prop. In addition, the link automatically gets an active CSS class when the target route is active.
+
+from [vue-router documentation](https://router.vuejs.org/en/api/router-link.html): 
+:::
+
+So, in the **AppLogin** and **AppSignup** component, let’s implement `router-link` so we can navigate between 
+those two views.
+
+Inside `src/router/index.js` file import `vue-router` and tell Vue to use it:
+
+```javascript{2,5,10,11,12,13,14}
+import Vue from 'vue'
+import Router from 'vue-router'
+// omitted for brevity
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+// omitted for brevity
+    {
+      path: '/signup',
+      name: 'AppSignup',
+      component: AppSignup
+    }
+  ]
+})
+```
+
+Inside **AppSignup** component add this:
+
+```html{4}
+<!-- omitted for brevity -->
+<div class="buttons is-centered">
+	<a class="button is-outlined is-primary is-rounded">Submit</a>
+	<router-link to="/login"><a class="button is-outlined is-info is-rounded">Login</a></router-link>
+</div>
+<!-- omitted for brevity -->
+```
+
+The last part of navigation will consist to go from `AppLogin/AppSignup` views to the `HelloWorld` view. For now, since we don’t have any code implemented, we will do a simple redirection to the Hello view when clicking on the Submit/Login button, without any authentication checking.
+
+With `router-link`, the navigation take places in the html part of the component, but now, we want to navigate between routes programmatically. To do so, we need to attach an event when clicking on the **Submit/Login** button, and with Vue 2, we can do that with the `v-on` directive.
+
+::: tip Listining to Events
+We can use the v-on directive to listen to DOM events and run some JavaScript when they’re triggered.
+from [Vue 2 doc](https://vuejs.org/v2/guide/events.html#Listening-to-Events)
+:::
+
+The event we want to listen to is click. So, on the click event of the `Login` button, we want to navigate to the Hello view.
+
+To navigate programmatically between views, `vue-router` has a set of function we can use in our app. To know more about those functions, you take a look in [their documentation](https://router.vuejs.org/en/essentials/navigation.html).
+
+In our example, we are going to use the `replace` function, because once the user is logged in, we want the `HelloWorld` view as our starting route.
+
+Let’s change our `AppLogin` component to put this in place.
+
+```html{3,15,16,17,18,19}
+<!-- omitted for brevity -->
+<div class="buttons is-centered">
+    <a class="button is-outlined is-primary is-rounded" v-on:click="login">Login</a>
+    <router-link to="/signup"><a class="button is-outlined is-info is-rounded">Signup</a></router-link>
+</div>			
+
+<!-- omitted for brevity -->
+
+<script>
+export default {
+  name: 'AppLogin',
+  data () {
+    return {}
+  },
+  methods: {
+    login: function () {
+      this.$router.replace('hello')
+    }
+  }
+}
+</script>
+```
+
+You can see inside the `login` function that we have `this.$router.replace('hello')`
+
+Why do we access the router with `this`? If you take a look into the `main.js` file, you’ll see that the router object is injected to the Vue app. That way, we can easily access it in every components of the app.
+
+```javascript{3,10}
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
+})
+```
+
+Also, we change the navigation to `hello`, but we don’t have any hello path yet.
+
+The default path of the `HelloWorld` component was `/` on the app initialization, but now that we know that the HelloWorld view will be only accessible when user is authenticated, let’s change the route so that the HelloWorld view is accessible when reaching `/hello` path.
+
+```javascript{5}
+// omitted for brevity
+export default new Router({
+  routes: [
+    {
+      path: '/hello',
+      name: 'HelloWorld',
+      component: HelloWorld
+    },
+    // omitted for brevity
+```
+
+Now, back to our `AppLogin` view, if you click on the `Login` button, you’ll be redirect to the `HelloWorld` view !
+
+## Firebase Integration
+
+Now that we have our front-end app ready, let’s implement Firebase so we can use it’s authentication system.
+
+### Create a new project on Firebase
+
+To use Firebase, you first need to create a new project on the firebase console. If you don’t have any account created, create one, then go to [Firebase console](https://console.firebase.google.com).
+
+Click on `Add project` . Them you should have a popup to create a new project. Choose the name you want. I choose to call it `firebase-vue-authentication`.
+
+Then, you should arrive on your project home page.
+
+![Firebase create new project](../images/add-new-firebase-project.png)
+
+Congrats! Your Firebase project is created. Now, to integrate it in our app, click on `Add Firebase to your web app`.
+
+![add-firebase-to-your-web-app](../images/add-firebase-to-your-web-app.png)
+
+
+
+A popup with a code snippet should appear. Copy the code inside the second script balise. It should look like:
+
+```javascript
+// Initialize Firebase
+
+let config = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SEND_ID"
+}
+firebase.initializeApp(config)
+```
+
+Now, let’s back to our vue project. We need to add the Firebase module to our project. To do so:
+
+```bash
+npm install ——save firebase
+```
+
+Once the installation is done, let’s import Firebase module to our app. I created a new file
+inside `config/` directory called `firebase-config.js`, and inside it I put the configuration that I copied from firebase console.
+
+```javascript
+module.exports = {
+  FIREBASE_CONFIG: {
+	  apiKey: "YOUR_API_KEY",
+	  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+	  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+	  projectId: "YOUR_PROJECT_ID",
+	  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+	  messagingSenderId: "YOUR_MESSAGING_SEND_ID"
+  }
+}
+```
+
+Then, open the `main.js` file, and initialize Firebase and import the configuration from
+`config/firebase-config.js`. Initialize the firebase.
+
+```javascript{2,3,7}
+// omitted for brevity
+import * as firebase from 'firebase'
+import * as firebaseConfig from '../config/firebase-config'
+
+Vue.config.productionTip = false
+
+firebase.initializeApp(firebaseConfig.FIREBASE_CONFIG)
+// omitted for brevity
+```
