@@ -16,27 +16,27 @@ web application with an authentication system using Vue 2, vue-router and Fireba
 Be sure that the Vue CLI is installed. If not run:
 
 ```bash
-$ npm install -g vue-cli
+npm install -g vue-cli
 ```
 
 Create a new project
 
 ```bash
-$ vue init <template-name> <project-name>
+vue init <template-name> <project-name>
 ```
 
 For this project I will use webpack template.
 
 ```bash
-$ vue init webpack firebase-vue-authentication
+vue init webpack firebase-vue-authentication
 ```
 
 Make sure that **vue-router** is installed.
 
 ```bash
-$ cd firebase-vue-authentication
-$ npm installed
-$ npm run dev
+cd firebase-vue-authentication
+npm installed
+npm run dev
 ```
 
 Now, open your browser and go to `http://localhost:8080`. You should see a page like:
@@ -118,21 +118,26 @@ that we defiend in `router/index.js`, inside the `<router-view>` component.
 
 ## Add some style
 
+In this part I will experiment with some CSS frameworks. So, if you're coding along you might want to see the
+results first and then try the one you like.
+
+### Add bulma CSS framework
+
 In this project I will use [**bulma**](https://bulma.io/) which is an open source CSS framework.
 
 Back in directory as the package.json file install and save **bulma** to the project like this:
 
 ```bash
-$ npm install --save bulma
+npm install --save bulma
 ```
 
 In addition, I will need to install some dev tools to properly load the styles for the application so the components know how to work with them. To do this, npm install these additional packages.
 
 ```bash
-$ npm install --save-dev vue-style-loader
-$ npm install --save-dev css-loader
-$ npm install --save-dev sass-loader
-$ npm install --save-dev node-sass
+npm install --save-dev vue-style-loader
+npm install --save-dev css-loader
+npm install --save-dev sass-loader
+npm install --save-dev node-sass
 ```
 
 Now, open up App.vue file and add inside the style element this:
@@ -176,9 +181,7 @@ When we go to browser `http://localhost:8080/#/login` we should see smthg like:
 After diving into bulma's now very welled designed documentation I've changed a little bit the `AppLogin` component. The above one is simpler. But
 the below one has some charisma.
 
-
-
-![Login Page - v1](../images/vue-login-page-v1.png)
+![Login Page - v1](../images/vue-login-page-v2.png)
 
 Here is the code to create above login page.
 
@@ -220,3 +223,68 @@ Here is the code to create above login page.
   </div>
 </template>
 ```
+
+Sanırım **bulma** yerine **semantic ui** kullanacağım.
+
+### Add semantic ui
+
+Install [semantic ui]() for vue:
+
+```bash
+npm install semantic-ui-vue --save
+```
+
+Once Semantic UI Vue has been installed, you will need to import it in your main file (usually `index.js` or `main.js`) and tell Vue to use it:
+
+```javascript
+import Vue from 'vue';
+import SuiVue from 'semantic-ui-vue';
+
+/* ... */
+
+Vue.use(SuiVue);
+```
+
+**Add semantic vue css package**
+
+The Semantic UI CSS package is automatically synced with the main Semantic UI repository to provide a lightweight CSS only version of Semantic UI. Semantic UI CSS can be installed as a package in your project using NPM. You won't be able to use custom themes with this method.
+
+```bash
+npm install semantic-ui-css --save
+```
+
+After install, you'll need to include the minified CSS file in your `index.js` file:
+
+```javascript
+import 'semantic-ui-css/semantic.min.css'
+```
+
+I didn't like it either, I think I am gonna continue with **bulma**. By the way this is what I had
+after some experiment. I couldn't place it at the center.
+
+```html
+<template>
+  <div>
+    <sui-card>
+      <sui-card-content>
+        <sui-form>
+          <sui-form-field>
+            <label>First Name</label>
+            <input placeholder="First Name" >
+          </sui-form-field>
+          <sui-form-field>
+            <label>Last Name</label>
+            <input placeholder="Last Name" >
+          </sui-form-field>
+          <sui-form-field>
+            <sui-checkbox label="I agree to the Terms and Conditions" />
+          </sui-form-field>
+          <sui-button type="submit">Submit</sui-button>
+        </sui-form>
+      </sui-card-content>
+    </sui-card>
+  </div>
+</template>
+```
+
+![Login Page - v3](../images/vue-login-page-v3.png)
