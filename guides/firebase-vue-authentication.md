@@ -11,6 +11,13 @@ This tutorial contains resources from
 In this tutorial, we will see how to quickly build a
 web application with an authentication system using Vue 2, vue-router and Firebase.
 
+You can find the github repo of this project on [this link](https://github.com/progayk/firebase-vue-authentication). Additionally, you can find the project documentation on [this link](https://github.com/progayk/vuepress-project/blob/master/guides/firebase-vue-authentication.md)
+
+
+::: danger WARNING!
+There are **inconsistincies** on code style. You should check them before publishing this tutorial!
+:::
+
 ##  Initial Setup
 
 Be sure that the Vue CLI is installed. If not run:
@@ -711,3 +718,52 @@ Then, let's go to `http://localhost:8082/#/login` and try to login with credenti
 **TADAAA!**
 
 ![succesfully-connected](../images/succesfully-connected.png)
+
+## Access the app only with authentication
+
+### Add meta fields to routes
+
+We are now authenticated! But nothing happens, right? Well, we need to redirect the user to the part of the application that can be accessed only if the user is authenticated. We already defined in our (beautiful) schema that the authenticated view of our app will be the `HelloWorld` view.
+
+To implement that in our Vue application, we can use **meta** field of **vue-router**. A meta field is an additional information you can set to your route.
+
+To know more about meta, you can check the vue-router documentation [here](https://router.vuejs.org/en/advanced/meta.html)
+
+Let’s add a **meta** field to the `HelloWorld` view. This meta will be called `requiresAuth` and will inform us that this view requires authentication.
+
+Also, we should define a default route for the app, since we changed the `HelloWorld`component that was before the default landing page.
+
+```javascript
+// omitted for brevity
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '*',
+      redirect: '/login'
+    },
+    {
+      path: '/login',
+      name: 'AppLogin',
+      component: AppLogin
+    },
+    {
+      path: '/hello',
+      name: 'HelloWorld',
+      component: HelloWorld
+    },
+    {
+      path: '/signup',
+      name: 'AppSignup',
+      component: AppSignup
+    }
+  ]
+})
+```
+
+With path: `'*'`, we redirect every paths that does not exist to the `AppLogin` view. If the user is authenticated, since the login page won’t be accessible when user is logged in, it will automatically redirect the view to the `HelloWorld` view.
+
+You can now try to enter a bad url, and you’ll see that it will redirect to the `AppLogin` view.
+
