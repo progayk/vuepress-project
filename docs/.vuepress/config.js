@@ -1,6 +1,6 @@
 module.exports = {
     title: 'My Documentations',
-    description: 'Document information for site',
+    description: 'A library with project documents',
     themeConfig: {
         search: true,
         searchMaxSuggestions: 10,

@@ -426,4 +426,4 @@ We shall proceed to deploy our static site using Netlify. Netlify provides an aw
 
 **Step 3** Specify the **branch** to deploy as `master` or choose whichever branch you would like to deploy. Set the **build command** to ` run docs:build` and the **publish directory** to `docs/.vuepress/dist`. Click ‘Deploy Site’. Your website should be deployed in little time and a public URL is provided to access it.
 
-Here is the [deployed version]() of this tutorial on Netlify.
+Here is the [deployed version](https://lucid-swanson-c5426e.netlify.com/) of this tutorial on Netlify.
