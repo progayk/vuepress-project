@@ -13,7 +13,7 @@ features:
   details: Enjoy the dev experience of Vue + webpack, use Vue components in markdown, and develop custom themes with Vue.
 - title: Performant
   details: VuePress generates pre-rendered static HTML for each page, and runs as an SPA once a page is loaded.
-footer: MIT Licensed | Copyright © 2018-present Evan You
+footer: MIT Licensed | Copyright © 2018-present Mayk Jony
 ---
 
 # Keep your Documentation AWESOME!
@@ -21,6 +21,8 @@ footer: MIT Licensed | Copyright © 2018-present Evan You
 ## Vuepress Journey
 
 [Vuepress Docs](https://vuepress.vuejs.org/ "goes to vuepress documentation")
+
+Here is the [deployed version](https://lucid-swanson-c5426e.netlify.com/) of this site on Netlify.
 
 First I said, *a new vue.js thing*, then I realised that this is another awesome thing from Vue team. So, let's dive deep into it and discover its features!
 
