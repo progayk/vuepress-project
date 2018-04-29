@@ -385,3 +385,35 @@ The second input is a radio input named "fruit" that displays the fruits "apples
 `<h4>So you like {{ favoriteFruit }}</h4>` 
 ::: 
 element's output. 
+
+## Deploy to Netlify
+
+Place all your file under **docs/** directory and create a file on your root dir called `package.json`. And fill it with below code:
+
+```json
+{
+    "name": "vuepress-docs",
+    "version": "1.0.0",
+    "description": "My documents for web developing",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "docs:dev": "vuepress dev docs",
+        "docs:build": "vuepress build docs"
+    },
+    "keywords": [],
+    "author": "mayk jony",
+    "license": "MIT",
+    "devDependencies": {
+    "vuepress": "^0.5.0"
+    }
+}
+```
+
+Then run the build command:
+
+```bash
+npm run docs:build
+```
+
+This may take a while to build after which the static files built can be found in `docs/docs/.vuepress/dist`
