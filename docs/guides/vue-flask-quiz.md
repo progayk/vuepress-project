@@ -8,6 +8,8 @@ sidebarDepth: 3
 In this docs I will create a Survey App  *Single Page Application* (SPA) by using [Vue.js](https://vuejs.org/) javascript framework for the front-end 
 and [Flask](http://flask.pocoo.org/) web framework for a backend REST API.
 
+The github repo for this project is on [here](https://github.com/progayk/vuepress-project)
+
 ## Credits
 
 This docs contains a lot of contents from:
