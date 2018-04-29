@@ -21,6 +21,8 @@ I found a very good tutorial on [this link](https://codeburst.io/all-about-core-
 
 Many thanks to [nodeschool.io](https://nodeschool.io).
 
+[free code camp Nodejs Course](https://www.freecodecamp.org/challenges/continue-working-with-nodejs-servers)
+
 ## An introduction to Node.js
 
 Usually building these kinds of systems is either:

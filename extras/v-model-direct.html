@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>v-model Directive</title>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+	<h1>v-model Directive</h1>
+	<div id="app">  
+  <div>
+    <label for="name">What is your name</label>
+    <input id="name" type="text" v-model="textInput" />
+    <span>Hello {{ textInput }}</span>
+  </div>
+
+  <h4>Which do you like better?</h4>
+  <div v-for="choice in radioChoices" :key="choice">
+    <label>{{ choice }}</label>
+    <input name="fruit" type="radio" v-model="favoriteFruit" :value="choice"/>
+  </div>
+  <h4>So you like {{ favoriteFruit }}</h4>
+</div>
+
+<script>  
+new Vue({  
+  el: '#app',
+  data: {
+    textInput: '',
+    radioChoices: ['apples', 'oranges'],
+    favoriteFruit: ''
+  }
+})
+</script>  
+</body>
+</html>

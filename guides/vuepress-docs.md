@@ -275,3 +275,55 @@ $textColor = #2c3e50
 $borderColor = #eaecef
 $codeBgColor = #282c34
 ```
+
+## The Vue Instance
+
+### Lifecycle Diagram 
+
+![lifecycle diagram](https://vuejs.org/images/lifecycle.png?_sw-precache=6f2c97f045ba988851b02056c01c8d62)
+
+## Vue Router
+
+[Scooby Shaggy Stand Alone vue-router example](../extras/scooby-shaggy.html)
+
+## v-model directive
+
+Consider the trivial example below. Again, you can see a working example of this code [here](https://jsfiddle.net/amcquistan/grq3qj36/).
+
+```html
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<div id="app">  
+  <div>
+    <label for="name">What is your name</label>
+    <input id="name" type="text" v-model="textInput" />
+    <span>Hello {{ textInput }}</span>
+  </div>
+
+  <h4>Which do you like better?</h4>
+  <div v-for="choice in radioChoices" :key="choice">
+    <label>{{ choice }}</label>
+    <input name="fruit" type="radio" v-model="favoriteFruit" :value="choice"/>
+  </div>
+  <h4>So you like {{ favoriteFruit }}</h4>
+</div>
+
+<script>  
+new Vue({  
+  el: '#app',
+  data: {
+    textInput: '',
+    radioChoices: ['apples', 'oranges'],
+    favoriteFruit: ''
+  }
+})
+</script> 
+```
+
+The first input is a text input asking for the user's name. This text input has a `v-model` registered to it with the data property `textInput` attached to it, which keeps the text input in sync with the `textInput` data property of the Vue instance. Take a second to type your name into the text input and watch it update in the `<span>Hello {{ textInput }.}</span>` HTML's output.
+
+The second input is a radio input named "fruit" that displays the fruits "apples" and "oranges" and asks the user to select their favorite. The radio input is registered to the `favoriteFruit` data property of the Vue instance via the `v-model`, which associates the value associated with each radio input via the `:value="choice"` attribute binding syntax to keep favoriteFruit in sync with the selected radio input. Again, you can watch the value of `favoriteFruit` update in the 
+::: v-pre 
+`<h4>So you like {{ favoriteFruit }}</h4>` 
+::: 
+element's output. 
