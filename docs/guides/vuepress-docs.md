@@ -416,4 +416,14 @@ Then run the build command:
 npm run docs:build
 ```
 
-This may take a while to build after which the static files built can be found in `docs/docs/.vuepress/dist`
+This may take a while to build after which the static files built can be found in `docs/.vuepress/dist`
+
+We shall proceed to deploy our static site using Netlify. Netlify provides an awesome continuous integration option by deploying from Github or any other supported hosted version control provider. Follow these steps to deploy your site to Netlify:
+
+**Step 1** Create an account on Github and Netlify. Push your code using Git to Github.
+
+**Step 2** Log in your Netlify account and select the `New site from Git` option. Choose Github as the continuous development provider and select the repository containing the documentation.
+
+**Step 3** Specify the **branch** to deploy as `master` or choose whichever branch you would like to deploy. Set the **build command** to ` run docs:build` and the **publish directory** to `docs/.vuepress/dist`. Click ‘Deploy Site’. Your website should be deployed in little time and a public URL is provided to access it.
+
+Here is the [deployed version]() of this tutorial on Netlify.
