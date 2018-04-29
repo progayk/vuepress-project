@@ -286,6 +286,64 @@ $codeBgColor = #282c34
 
 [Scooby Shaggy Stand Alone vue-router example](../extras/scooby-shaggy.html)
 
+### Programatic Routing
+
+Similar to before I want to demonstrate a few things just discussed with a variation of one of the previous toy examples. Below I have altered the navigation example that displays either Scooby or Shaggy to no longer use the `<router-link>` component.
+
+```html
+<!-- index.html -->  
+<script src="https://unpkg.com/vue/dist/vue.js"></script>  
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+<div id="app">  
+  <p>
+    <a @click="toScooby">Scooby</a>
+    <a @click="toShaggy">Shaggy</a>
+  </p>
+  <router-view></router-view>
+</div>
+
+<script>  
+const Scooby = {  
+    template: `
+    <div>
+      <h4>Scooby</h4>
+      <p>
+        <img src="https://www.wbkidsgo.com/Portals/4/Images/Content/Characters/Scooby/characterArt-scooby-SD.png" alt="scooby"/>
+      </p>
+    </div>`
+}
+
+const Shaggy = {  
+    template: `
+    <div class="character">
+      <h4>Shaggy</h4>
+      <p>
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/ShaggyRogers.png/150px-ShaggyRogers.png" alt="shaggy"/>
+      </p>
+    </div>`
+}
+
+const router = new vue-router({  
+  routes: [
+    { path: '/characters/scooby', component: Scooby },
+    { path: '/characters/shaggy', component: Shaggy }
+  ]
+})
+
+const app = new Vue({  
+  router: router,
+  methods: {
+    toScooby() { this.$router.push('/characters/scooby') },
+    toShaggy() { this.$router.push('/characters/shaggy') }
+  }
+}).$mount('#app')
+
+</script>  
+```
+
+The example behaves in the exact same way as before, but now the routing is done via a combinations of click event listeners, Vue methods, and manually calling `this.$router.push('/path')`. This is actually what `<router-link>` does behind the scenes using the `to="/path"` value. I encourage you to play with this live example [here](https://jsfiddle.net/maykjony/r5m4850c/).   
+
 ## v-model directive
 
 Consider the trivial example below. Again, you can see a working example of this code [here](https://jsfiddle.net/amcquistan/grq3qj36/).

@@ -666,7 +666,7 @@ Updating the browser's URL to [localhost:8080/surveys/2](localhost:8080/surveys/
 
 Next I would like to do something a little more useful with my `AppSurvey` component and include the questions and choices. 
 
-```hmtl
+```html
 <template>  
   <div>
     <!-- omitted survey name header for brevity -->
@@ -721,3 +721,194 @@ For the radio input I have used the `v-model` directive and supplied it with a v
 *Aside 2 - Using the v-model Directive*
 
 To understand better the v-model directives there is an example on [here](./vuepress-docs.md#v-model-directive)
+
+## Completing the Survey Taking Experience
+
+Think about the case where a survey has many more questions displayed below the default screen height. Generally, we want to keep people from having to scroll down to see your most important content. A better choice would be to paginate through the questions displaying one question, and its responses, at a time.
+
+The updated `AppSurvey` component accomplishes this below.
+
+```html
+<template>  
+  <div>
+    <!-- omitted for brevity -->
+    <section class="section">
+      <div class="container">
+
+        <div class="columns">
+          <div class="column is-10 is-offset-1">
+
+            <div
+              v-for="(question, idx) in survey.questions" <!-- modified v-for -->
+              v-bind:key="question.id"
+              v-show="currentQuestion === idx"> <!-- new v-show directive -->
+
+                  <div class="column is-offset-3 is-6">
+                    <!-- <h4 class='title'>{{ idx }}) {{ question.text }}</h4> -->
+                    <h4 class='title has-text-centered'>{{ question.text }}</h4>
+                  </div>
+                  <div class="column is-offset-4 is-4">
+                    <div class="control">
+                      <div v-for="choice in question.choices" v-bind:key="choice.id">
+                        <label class="radio">
+                        <input type="radio" v-model="question.choice" :value="choice.id">
+                        {{ choice.text }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+            </div>
+
+            <!-- new pagination buttons -->
+            <div class="column is-offset-one-quarter is-half">
+              <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                <a class="pagination-previous" @click.stop="goToPreviousQuestion"><i class="fa fa-chevron-left" aria-hidden="true"></i> &nbsp;&nbsp; Back</a>
+                <a class="pagination-next" @click.stop="goToNextQuestion">Next &nbsp;&nbsp; <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+              </nav>
+            </div>
+
+            <!-- new submit button -->
+            <div class="column has-text-centered">
+              <a v-if="surveyComplete" class='button is-focused is-primary is-large'
+                @click.stop="handleSubmit">
+                Submit
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>  
+import { fetchSurvey, saveSurveyResponse } from '@/api' // new AJAX func  
+export default {  
+  data() {
+    return {
+      survey: {},
+      currentQuestion: 0  // new data prop
+    }
+  },
+  beforeMount() {
+    // omitted for brevity
+  },
+  methods: { // new Vue obj member
+    goToNextQuestion() {
+      if (this.currentQuestion === this.survey.questions.length - 1) {
+        this.currentQuestion = 0
+      } else {
+        this.currentQuestion++
+      }
+    },
+    goToPreviousQuestion() {
+      if (this.currentQuestion === 0) {
+        this.currentQuestion = this.survey.questions.lenth - 1
+      } else {
+        this.currentQuestion--
+      }
+    },
+    handleSubmit() {
+      saveSurveyResponse(this.survey)
+        .then(() => this.$router.push('/'))
+    }
+  },
+  computed: {  // new Vue obj member
+    surveyComplete() {
+      if (this.survey.questions) {
+        const numQuestions = this.survey.questions.length
+        const numCompleted = this.survey.questions.filter(q => q.choice).length
+        return numQuestions === numCompleted
+      }
+      return false
+    }
+  }
+}
+</script> 
+```
+
+These changes work together to complete the survey-taking experience. As the question nodes are generated from `v-for="(question, idx) in survey.questions"` I am using the `v-show="currentQuestion === idx"` directive to test if the value of the data property, `currentQuestion`, matches the value of `idx`. This makes the question `div` visible only if `currentQuestion` is equal to that question's `idx` value. Since the value of `currectQuestion` is initialized to zero, the zeroth question will be displayed by default. 
+
+::: tip 
+I called it `idx` since we use `id` to bind `question.id` to `v-model`.
+:::
+
+Below the questions and responses the pagination buttons allow the user to paginate through the questions. The "next" button element has `@click="goToNextQuestion"` within it, which is a **Vue click event handler** that responds by calling the `goToNextQuestion` function inside the new methods Vue object property. 
+Here `goToNextQuestion` increments `currentQuestion` by one, advancing the question being displayed, or it resets it to the first question. The back button and its associated `goToPreviousQuestion` method does the exact opposite.
+
+::: tip
+A Vue component **object's methods** section is where functions can be defined to do a number of things, most often to change component state. 
+:::
+
+The last change is the functionality to submit the survey response. The button uses `v-show` again to determine if the button should be displayed based off the value of a computed property called `surveyCompleted`.
+
+::: tip Computed Properties
+Computed properties are another awesome trait of Vue. They are properties that usually control how UI components are displayed that come in handy when the logic is a bit more complex than checking a single value of a data property. In this way the template code is clean and able to focus on presentation while the logic remains in the JavaScript code.
+:::
+
+A click event listener, `@click="handleSubmit"`, is registered on the submit anchor button, which calls the `handleSubmit` method. This method calls the mock AJAX function `saveSurveyResponse`, which returns a **promise** and passes control to the **then chain**. The **then chain** has a callback, `.then(() -> this.$router.push('/'))`, that calls the component's router object and programmatically routes the app back to the root path displaying the `AppHome` component.
+
+In the **api/index.js** add the `saveSurveyResponse` function at the bottom of the file. This function receives a survey response object and simply console logs "saving survey response..." until I connect the front-end to the REST API in the future.
+
+Go to [localhost:8080/#/surveys/2](localhost:8080/#/surveys/2) on your browser and try to use the app. You will see a page like below:
+
+![Screenshot-2018-4-29-survey-spa1.png](../images/Screenshot-2018-4-29-survey-spa1.png)
+
+*Aside 3 - Programmatic Routing*
+
+The explanation of this concept is on [here](./vuepress-docs.md#programatic-routing)
+
+## Adding Router Links to the Home Component
+
+The last thing to do with the `AppSurvey` component is provide the ability to navigate to a survey from the `AppHome` component. As shown previously with the Scooby and Shaggy example, **vue-router** makes this incredibly easy with `<router-link>`.
+
+Back in the `AppHome` component make the following modification:
+
+```html
+<div class="card" v-for="survey in surveys" v-bind:key="survey.id">  
+  <div class="card-content">
+    <p class="title">{{ survey.name}}</p>
+    <p class='subtitle'>{{survey.created_at.toDateString()}}</p>
+  </div>
+  <div class="card-foooter">
+    <router-link :to="`surveys/${survey.id}`" class="card-footer-item">Take Survey</router-link>
+  </div>
+</div>
+```
+
+I added a `<router-link>` component inside a bulma card footer and dynamically constructed the path to each survey. This is different from the literal string paths I provided in my earlier example. To dynamically produce the paths using the JavaScript template strings and the survey IDs being iterated over I prefix the `to` parameter with a colon `(":")`, which is shorthand for the `v-bind` directive.
+
+I save all files and pull up the root URL path, [localhost:8080](http://localhost:8080/#/), in my browser to make sure it works. You should be able to click on each survey's "Take Survey" link and be displayed the `AppSurvey` component UI.
+
+To complete the experience I add a simple nav bar with a "Home" tab using `<router-link>` and a to parameter pointing to the application's root path within a new component file named `AppHeader.vue` in the component's directory.
+
+```html
+<template>  
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">  
+  <div class="navbar-menu">
+    <div class="navbar-start">
+      <router-link to="/" class="navbar-item">
+        Home
+      </router-link>
+    </div>
+  </div>
+</nav>  
+</template>
+
+<script>  
+</script>
+
+<style>  
+</style>  
+```
+
+To ensure that it is included in every page of the application I place it in the `App.vue` component. To do this I first import the `AppHeader` component as **AppHeader** in the script section then register it by adding a property called components on the `App` component's Vue object and set it equal to an object containing the `AppHeader` component.
+
+I then add the component in the template placing `<app-header>` right above the `<router-view>` component. When naming components it's common to use [Pascal case](http://wiki.c2.com/?PascalCase) concatenating the words describing it together where each word's first letter is capitalized. Then I include it in the template in all lowercase with hyphens between each word that began with a capitalized letter. 
+
+Saving the files and refreshing the browser I now see the `AppHeader` component containing the nav bar in each page of the application.
+
+![Screenshot-2018-4-29-survey-spa2](../images/Screenshot-2018-4-29-survey-spa2.png)
