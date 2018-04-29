@@ -18,6 +18,16 @@ You can find the github repo of this project on [this link](https://github.com/p
 There are **inconsistincies** on code style. You should check them before publishing this tutorial!
 :::
 
+## Contents
+
+[[toc]]
+
+::: tip `[[toc]]`
+
+**Table of Contents**. Adamlar bunu dusunmus ya la!
+:::
+
+
 ##  Initial Setup
 
 Be sure that the Vue CLI is installed. If not run:
@@ -42,7 +52,7 @@ Make sure that **vue-router** is installed.
 
 ```bash
 cd firebase-vue-authentication
-npm installed
+npm install
 npm run dev
 ```
 
@@ -388,7 +398,7 @@ If we look back to the schema of the app architecture we defined, we can navigat
 
 Well, we will use another component of **vue-router** called `router-link`.
 
-::: tip INFO
+::: tip router-link
 `<router-link>` is the component for enabling user navigation in a router-enabled app. The target location is specified with the to prop. It renders as an `<a>` tag with correct href by default, but can be configured with the tag prop. In addition, the link automatically gets an active CSS class when the target route is active.
 
 from [vue-router documentation](https://router.vuejs.org/en/api/router-link.html): 
@@ -767,3 +777,233 @@ With path: `'*'`, we redirect every paths that does not exist to the `AppLogin` 
 
 You can now try to enter a bad url, and you’ll see that it will redirect to the `AppLogin` view.
 
+###  Redirect the routes if user is authenticated
+
+Now that we have everything ready, we need to know if the user is authenticated in Firebase. To do so, Firebase provides a function to get back the current user: `firebase.auth().currentUser`.
+
+This function send back the currently signed-in user by using the `currentUser` property. If a user isn't signed in, `currentUser` is **`null`**.
+
+In the previous part, we set **meta** fields to our routes, so that we could know which view need authentication to be accessible.
+
+Now, we need to check before accessing each views if the user is authenticated and if the view we want to access need authentication or not.
+
+To do so, we are going to use **navigation guards** of **vue-router**.
+
+::: tip Navigation Guards
+
+As the name suggests, the navigation guards provided by vue-router are primarily used to guard navigations either by redirecting it or canceling it. There are a number of ways to hook into the route navigation process: globally, per-route, or in-component.
+
+from [vue-router documentation](https://router.vuejs.org/en/advanced/navigation-guards.html)
+:::
+
+In our example, we are going to use the global navigation guard `beforeEach`.
+
+Let’s implement it in our `src/router/index.js` file.
+
+```javascript{2,4,8,15,16,17,23,24,25,26,27,28,29,30,32}
+import Vue from 'vue'
+import Router from 'vue-router'
+// omitted for brevity
+import firebase from 'firebase'
+
+Vue.use(Router)
+
+let router = new Router({
+  routes: [
+	// omitted for brevity
+    {
+      path: '/hello',
+      name: 'HelloWorld',
+      component: HelloWorld,
+      meta: {
+        requireAuth: true
+      }
+    },
+    // omitted for brevity
+  ]
+})
+
+router.beforeEach((to, from, next) => {
+  let currentUser = firebase.auth().currentUser
+  let requiresAuth = to.matched.some(record => record.meta.requireAuth)
+
+  if (requiresAuth && !currentUser) next('login')
+  else if (!requiresAuth && currentUser) next('hello')
+  else next()
+})
+
+export default router
+```
+
+The `beforeEach` function take three parameters, `to`, `from`, and `next` and will be called whenever a navigation is triggered.
+
+* `to` parameter is the target Route Object being navigated to.
+* `from` parameter is the current route being navigated away from.
+* `next` parameter is a function that must be called to resolve the hook, and can take argument to redirect or abort the navigation (see more on the [documentation](https://router.vuejs.org/en/advanced/navigation-guards.html))
+
+In the `beforeEach` function, we get back the `currentUser` form Firebase, and 
+we chceck if the route we want to navigate requires Authentication by checking if the route object has the `requiresAuth` **meta**.
+
+To understand the way we get back the `requiresAuth` **meta**, we need to know that each route object in the routes configuration is called a route **`record`**. In our tutorial, we don’t have nested routes, but a route records may be nested. Therefore when a route is matched, it can potentially match more than one route record.
+
+All route records matched by a route are exposed on the `$route` object (and also route objects in navigation guards) as the `$route.matched` Array. Therefore, we need to iterate over `$route.matched` to check for meta fields in route records.
+
+So, in our navigation guard global function, inside the to route object, we search if the `matched` Array has some records (in our case a single one) with `requiresAuth` **meta**.
+
+Then, we define our rules for navigation.
+
+If the route that we navigate to requires authentication and there is no current user logged in, we redirect to the `AppLogin` view.
+
+If the route we navigate to does not require authentication and there is a user logged in, we redirect to the `HelloWorld` view.
+
+Else, we proceed navigation.
+
+
+We should now be able to access the app only when the user is authenticated.
+
+Since we already logged-in in the previous step, if you reload the page, based on our navigation guard implementation, you should be redirect to the `HelloWorld` view.
+
+Let’s try to reload the page.
+
+Nothing is happening ! We still are in the Login view.
+
+Why?
+
+Well, it’s simply because in the lifecycle of our app, the execution of our navigation guard `beforeEach` take place before Firebase initialization end. So, when we first load the app, since Firebase module has not finish his initialization, `firebase.auth().currentUser` return **`null`**!
+
+After the first load, if you try to go to the /signup path, you’ll see that the redirection take place and you ends up in the `HelloWorld` view.
+
+How can we avoid this scenario and make sure that the redirection take place directly on the first load of the app?
+
+Well, Firebase let’s us the possibility to set an observer on the Auth object, so we can ensure that the Auth object isn’t in an intermediate state — such as initialization — when you get the current user.
+
+This observer is called `onAuthStateChanged`. (you can see more about the observer in the [Firebase documentation](https://firebase.google.com/docs/auth/web/manage-users#get_a_users_profile)
+
+So, by setting a callback on the `onAuthStateChanged` observer, we can initialize the Vue app only when we are sure Firebase is initialized.
+
+Let’s change our `src/main.js` file like that:
+
+```javascript
+// omitted for brevity
+Vue.config.productionTip = false
+
+let app;
+firebase.initializeApp(firebaseConfig.FIREBASE_CONFIG)
+firebase.auth().onAuthStateChanged(function (user) {
+  if (!app) {
+    /* eslint-disable no-new */
+    app = new Vue({
+      el: '#app',
+      components: { App },
+      template: '<App/>',
+      router
+    })
+  }
+})
+```
+
+We now initialize the app only when we are sure Firebase Auth object is ready to use.
+
+Now if you refresh the page, or try to access the `AppLogin` or `AppSignup` view from url, you’ll see the redirection in action.
+
+### Redirection after Login/SignUp and logout from the app
+
+Now that we have our authentication system, we still need to redirect the user after the gogin or when a new user is created. Also, we want to be able to logout from Firebase.
+
+To logout, let’s just add a button in our `HelloWorld` component and attached an event to logout from Firebase.
+
+Like `signInWithEmailAndPassword` and `createUserWithEmailAndPassword`, Firebase provide a function to logout called `signOut` that return a promise. Once the `SignOut` function is done, we will be redirected to the `AppLogin` view.
+
+```html{8,13,22,23,24,25,26,27,28}
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <h2>Essential Links</h2>
+    <ul>
+      <!-- omitted for brevity -->
+    </ul>
+    <button v-on:click="logout"></button>
+  </div>
+</template>
+
+<script>
+import firebase from 'firebase'
+
+export default {
+  name: 'HelloWorld',
+  data() {
+    return {
+      msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    logout: function () {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('login')
+      })
+    }
+  }
+}
+</script>
+<!-- omitted for brevity -->
+```
+
+Now, when we click on the **Logout** button, we logout from Firebase and go back on the Login view.
+
+To be sure that you are now logged out from Firebase, you can refresh the page or try to access the `HelloWorld` view.
+
+Now, let’s **sign in** again, but before that, let’s change the code so that we can be redirect to the authenticate part of the app after login.
+
+```html
+<!-- omitted for brevity -->
+  methods: {
+    signIn: function () {
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          (user) => {
+            this.$router.replace('hello')
+          },
+          (err) => {
+            alert('Oops, ' + err.message)
+          }
+        )
+    }
+  }
+<!-- omitted for brevity -->
+```
+
+Now, try to login, and you should be redirect to the `HelloWorld` view.
+
+Let’s implement the same thing for the `AppSignup` component.
+
+```html
+<!-- omitted for brevity -->
+  methods: {
+    signUp: function () {
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then(
+          (user) => {
+            this.$router.replace('hello')
+          },
+          (err) => {
+            alert('Oops, ' + err.message)
+          }
+        )
+    }
+  }
+<!-- omitted for brevity -->
+```
+
+::: tip BIR HIGHLY IMPORTANT
+
+Now, after a new account creation, the user will also be redirected to the `HelloWorld` view !
+
+You may noticed that i turned the callback functions in `signInWithEmailAndPassword`, `createUserWithEmailAndPassword`, and `signOut` in **ES6 arrow functions**. Why?
+
+Simply because method definition `(function name() {})`, have their own `this` context. If we were using method definition, we wouldn’t be able to access `this.$router` inside our callbacks. We should have encapsulate the `this` object of the parent method inside a variable to access it.
+
+With ES6 arrow function, this is lexical, meaning that it does not create its own this context. Instead, this has the original meaning from the enclosing context.
+
+By using ES6 arrow function, we can access `this.$router` and let the redirection take place.
+
+:::
