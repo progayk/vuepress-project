@@ -427,3 +427,97 @@ We shall proceed to deploy our static site using Netlify. Netlify provides an aw
 **Step 3** Specify the **branch** to deploy as `master` or choose whichever branch you would like to deploy. Set the **build command** to ` run docs:build` and the **publish directory** to `docs/.vuepress/dist`. Click ‘Deploy Site’. Your website should be deployed in little time and a public URL is provided to access it.
 
 Here is the [deployed version](https://lucid-swanson-c5426e.netlify.com/) of this tutorial on Netlify.
+
+## Animate on Scrool package
+
+Here is the [github repo](https://github.com/michalsnik/aos) for the AOS package.
+And [demo page](http://michalsnik.github.io/aos/).
+
+Install AOS package with npm
+
+```bash
+npm install --save AOS
+```
+
+Inside `main.js` file import AOS
+
+```javascript
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+```
+
+Add AOS component into any `.vue` file like so:
+
+```html
+<div class="column">
+  <figure class="image is-square">
+    <img data-aos="fade-zoom-in"
+         data-aos-offset="200"
+         data-aos-easing="ease-in-sine"
+         data-aos-duration="600" src="../assets/yirmiuc-nisan-cocuklar.jpg">
+  </figure>
+</div>
+```
+
+## vue-parallaxy package
+
+Here is the [github repo](https://github.com/apertureless/vue-parallax) for this package.
+
+And here is the [demo page](https://apertureless.github.io/vue-parallax/).
+
+install with npm:
+
+```bash
+npm install --save vue-parallaxy
+```
+
+### Usage
+
+Inside any `.vue` file import the package
+
+```html
+<script>
+import Parallax from 'vue-parallaxy'
+export default {
+  name: 'AppHeaderMain',
+  components: {
+    Parallax
+  }
+}
+</script>
+```
+
+Add parallax template:
+
+```html
+<parallax :fixed="true">
+  <section class="hero is-fullheight has-bg-img">
+      <div class="hero-body">
+        <div class="container has-text-centered" v-parallax="-0.5">
+          <h1 class="title">
+            Birlikte Güzel
+          </h1>
+          <h2 class="subtitle">
+            Gelin Güzelleşelim
+          </h2>
+        </div>
+      </div>
+  </section>
+</parallax>
+```
+
+### Props
+
+
+| Prop   |      Type      |  Default Value | Description
+|----------|:-------------:|------|------|
+| parallax |  Boolean | true | Activates parallax effect |
+| speedFactor |  Number   | 0.15 | factor on how strong the effect is|
+| direction |  String   | 'up' | Either 'up' or 'down', determines scroll direction of image |
+| fixed | Boolean | false | Other parallax effect. Image is fixed in position |
+| sectionHeight | Number | 70 | section height for mobile |
+| breakpoint | String | '(min-width: 968px)' | Media query for mobile deactivation |
+| sectionClass | String | 'Masthead' | CSS class of the outer section tag |
+| containerClass | String | 'Masthead__image' | CSS class of the container holding the  image |
+| parallaxClass | String | 'is-parallax' | Modifier class for the parallax effect |
+| fixedClass | String | 'is-fixed' | Modifier class for the fixed parallax effect |

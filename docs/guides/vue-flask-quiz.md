@@ -26,7 +26,7 @@ This docs contains a lot of contents from:
 
 I will be using two very important tools for a Vue.js project, which are the official [Vue.js command line interface (CLI)](https://vuejs.org/v2/guide/installation.html#CLI) and the very powerful module bundler and build tool webpack. Both of these tools rely on the Node.js runtime and its package manager, npm. If you have not already installed node then please consult the Node.js installation docs for your system, which will also include an installation of npm.
 
-Install the Vue.js CL (vue-cli):
+Install the Vue.js CLI (vue-cli):
 
 ```bash
 npm install vue-cli -g
@@ -275,6 +275,12 @@ npm install --save-dev node-sass
 ```
 
 Now open up App.vue and replace the style section with what is below, which will import the bulma framework using scss import syntax.
+
+```html
+<style lang="scss">  
+@import '~bulma/bulma'
+</style>  
+```
 
 ### Make a Home Page
 
