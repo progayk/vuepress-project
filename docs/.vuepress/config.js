@@ -51,6 +51,16 @@ module.exports = {
                 ],
             },
             {
+                text: 'Vue Course',
+                items: [
+                    {
+                        text: 'Getting Started',
+                        link: '/vuejs2_course/getting-started',
+                    }
+                
+                ]
+            },
+            {
                 text: 'Info',
                 link: '/info/'
             }
@@ -67,6 +77,10 @@ module.exports = {
                 'nodejs-docs',
                 'bakermill-menu',
                 'vue-flask-quiz'
+            ],
+            '/vuejs2_course/': [
+                '',
+                'getting-started'
             ],
             '/info/': [
                 ''

@@ -521,3 +521,228 @@ Add parallax template:
 | containerClass | String | 'Masthead__image' | CSS class of the container holding the  image |
 | parallaxClass | String | 'is-parallax' | Modifier class for the parallax effect |
 | fixedClass | String | 'is-fixed' | Modifier class for the fixed parallax effect |
+
+## vue-scrollto package
+
+Install [vue-scrollto](https://www.npmjs.com/package/vue-scrollto).
+
+```bash
+npm install --save vue-scrollto
+```
+
+### Usage
+
+Import the library into `main.js` file:
+
+```javascript
+import VueScrollTo from 'vue-scrollto'
+
+Vue.use(VueScrollTo, {
+  container: "body",
+  duration: 1000,
+  easing: "ease-in-out",
+  offset: 0,
+  cancelable: true,
+  onStart: false,
+  onDone: false,
+  onCancel: false,
+  x: false,
+  y: true
+})
+```
+
+## Deploy a VueJS App with DigitalOcean
+
+### Credits
+
+Thank you [Bailey Charlton](https://medium.com/@Web_Bailey?source=post_header_lockup) for [this great tutorial](https://medium.com/@Web_Bailey/deploy-a-vuejs-app-with-digitalocean-fd6e7af07e40).
+
+
+
+So let’s get started by setting up our Digital Ocean server. For this tutorial, we’ll use the **NodeJS 6.11.2** on **16.04** One-click app.
+
+### Create Droplet on DigitalOcean
+
+Depending on how big your VueJS application is, it is recommended that you use the $10/mo droplet plan. If you want to add SSH keys to your server, check out this article, but for now, we’ll skip this step. Name your droplet whatever you want and click create.
+
+Your droplet will be created and an email containing the password will be sent to you. Now let’s enter into our droplet.
+
+::: tip
+We’ll be using the default root user for this tutorial. If you want to change users, check out [this article](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart).
+:::
+
+### SSH Into Droplet
+
+You’ll be prompted about the authenticity of the host. Simply type yes and hit enter. Then enter in your password if you’re not using SHH keys. Continue following through the password prompts until you’ve set a new password.
+
+```bash
+ssh root@YOUR_DROPLET_IP
+```
+
+You’ll be prompted about the authenticity of the host. Simply type yes and hit enter. Then enter in your password if you’re not using SHH keys. Continue following through the password prompts until you’ve set a new password.
+
+### Install Nginx
+
+We now need to add Nginx to our droplet to serve our application. For a more in-depth guide on installing Nginx, check out [this article](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04). For now, I’ll cut to the chase for what we need to do to accomplish our app deployment.
+
+```bash
+sudo apt-get update
+sudo apt-get install nginx -y
+```
+
+The updates and installation may take a few moments. We now need to allow HTTP traffic through our firewall.
+
+```bash
+sudo ufw enable
+sudo ufw allow 'Nginx HTTP'
+```
+
+To be able to make an SSH connection to server we need to allow OpenSSH
+
+```bash
+sudo ufw allow OpenSSH
+```
+
+### Nginx Configuration
+
+We’re going to jump into the Nginx configuration to point where our application files will be server from.
+
+```bash
+sudo vi /etc/nginx/sites-available/default
+```
+
+Now let’s make some minor edits and be done with the configuration. We’re going to change the root path to `/var/www/html/Vue/dist`. Next we’ll remove the `try_files $uri $uri/ =404;` line. Lastly, you’ll add the following `404 redirect` below the `server_name`:
+
+```
+error_page 404 /index.html;
+```
+
+We set the 404 redirect to our *index.html* file because that is the entry point for our VueJS application if you use Vue-Router. Our configuration should now look like the following:
+
+```
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html/Vue/dist;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        error_page 404 /index.html;
+
+        location / {
+        }
+}
+```
+
+Save the file and exit.
+
+### Test and Reload Nginx
+
+We’ll now test to see that our Nginx configuration is valid.
+
+```bash
+sudo nginx -t
+```
+You should get a confirmation.
+
+Now let’s reload Nginx with the command:
+
+```bash
+sudo systemctl restart nginx
+```
+
+Now we are completely done working with Nginx.
+
+### Git Repo Setup
+
+* Create app repo
+* Create bare repo
+* Create githook to receive our commits and direct them to app repo
+
+
+
+Go to [this link](./git-docs.md#transfer-files-to-repo-on-server) to setup git repo.
+
+### Deploy VueJS Application
+
+We need to initialize the local Vue app folder as a Git repo and set it up.
+
+```bash
+git init
+git remote add origin root@YOUR_DROPLET_IP:/var/www/html/repo
+git add .
+git commit -m "Initial commit"
+```
+
+This will prepare all of our files to be deployed to our bare repo on our droplet. To deploy, simply push your commit.
+
+```bash
+git push origin master
+```
+
+If you’re not using SSH Keys, you’ll be prompted to enter your droplet’s password. Do so and then the commit will be pushed to the droplet.
+
+Anytime you want to push new changes from your local Vue app to your droplet, you will need to `git add` and `git push` the commits as we did above. So that’s it! We’ve now deployed our VueJS application to our droplet. But there’s a few last steps to complete!
+
+### Finalize Vue Application
+
+Switch back over to your droplet console and navigate to your Vue folder.
+
+```bash
+cd /var/www/html/Vue
+```
+
+If you run the ls command, you should now see your application’s files all in the folder.
+
+::: danger IMPORTANT
+You have to change folder permissions before installing dependencies. To make this use the following commands:
+```bash
+sudo chown -R $USER:$USER /var/www/html
+sudo chmod -R 775 /var/www/html
+```
+:::
+
+We’ll now need to install the app’s dependencies.
+
+```bash
+npm install
+```
+
+Depending on how many dependencies your app requires, this may take a few moments. Once they’re installed, we’ll need to “bundle” our application. Since we’re using Webpack with our app, we have a built-in command to bundle our code for production. Let’s run it.
+
+```bash
+npm run build
+```
+
+This will create a `dist` folder containing all of our bundled code. Depending on how many modules you’ve added to your application, this process may take a few moments.
+
+Once the bundling is done, your Vue application should now be available to view on the web! If you’ve setup a domain name to your droplet, head to the address, otherwise enter in the droplet IP in your browser. For my application, mine shows the default template for a Vue application.
+
+::: tip
+Anytime you push new changes to your droplet, you’ll have to run the npm run build command from your droplet console.
+:::
+
+## Escaping
+
+By default, fenced code blocks are automatically wrapped with `v-pre`. If you want to display raw mustaches or Vue-specific syntax inside inline code snippets or plain text, you need to wrap a paragraph with the v-pre custom container:
+
+**Input**
+
+```
+::: v-pre
+`{{ This will be displayed as-is }}`
+:::
+```
+
+**Output**
+
+::: v-pre
+`{{ This will be displayed as-is }}`
+:::
+
+### vue-awesome-swiper library
+
+You can see the demo page on [this link](https://surmon-china.github.io/vue-awesome-swiper/).
