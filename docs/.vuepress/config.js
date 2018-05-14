@@ -56,8 +56,11 @@ module.exports = {
                     {
                         text: 'Getting Started',
                         link: '/vuejs2_course/getting-started',
-                    }
-                
+                    },
+                    {
+                        text: 'VueJs Interaction with DOM',
+                        link: '/vuejs2_course/vuejs-interaction-with-DOM',
+                    },
                 ]
             },
             {
@@ -80,7 +83,8 @@ module.exports = {
             ],
             '/vuejs2_course/': [
                 '',
-                'getting-started'
+                'getting-started',
+                'vuejs-interaction-with-DOM'
             ],
             '/info/': [
                 ''
