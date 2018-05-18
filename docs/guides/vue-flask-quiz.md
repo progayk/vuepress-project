@@ -655,6 +655,7 @@ const surveys = [{
 export function fetchSurvey (surveyId) {  
   return new Promise((resolve, reject) => {
     setTimeout(() => {
+      // find survey where survey id is equal to given id
       const survey = surveys.find(survey => survey.id === surveyId)
       if (survey) {
         resolve(survey)
@@ -920,3 +921,128 @@ I then add the component in the template placing `<app-header>` right above the 
 Saving the files and refreshing the browser I now see the `AppHeader` component containing the nav bar in each page of the application.
 
 ![Screenshot-2018-4-29-survey-spa2](../images/Screenshot-2018-4-29-survey-spa2.png)
+
+## State Management with Vuex
+
+[Vuex](https://vuex.vuejs.org/en/intro.html) is a centralized state management library officially supported by the core Vue.js development team. Vuex provides a [flux-like](https://code-cartoons.com/a-cartoon-guide-to-flux-6157355ab207), unidirectional data flow, pattern that is proven to be very powerful in supporting moderate to large Vue.js applications.
+
+Vuex has been designed to specifically work with Vue.js's fast and simple reactivity system. This is accomplished through a well-designed API that provides a single source of truth for an application's data as a singleton object. In addition to the single source of truth principle, vuex also provides explicit and trackable methods for asynchronous operations (actions), convenient reusable accessors (getters), and data altering capabilities (mutations).
+
+To use vuex I will first need to install it in the same directory that contains the package.json file like so:
+
+```bash
+npm install --save vuex
+```
+
+Next I add a new directory within the project's src/ directory called "store" and add an index.js file. This results in the survey-spa project structure that now looks like this (ignoring the node_modules, build, and config directories):
+
+```
+├── index.html
+├── package-lock.json
+├── package.json
+├── src
+│   ├── App.vue
+│   ├── api
+│   │   └── index.js
+│   ├── assets
+│   │   └── logo.png
+│   ├── components
+│   │   ├── Header.vue
+│   │   ├── Home.vue
+│   │   └── Survey.vue
+│   ├── main.js
+│   ├── router
+│   │   └── index.js
+│   └── store
+│       └── index.js
+└── static
+    └── .gitkeep
+```
+
+Inside the store/index.js file I begin by adding the necessary imports for Vue and Vuex objects then attach Vuex to Vue using `Vue.use(Vuex)` similar to what was done with vue-router. After this I define four stubbed out JavaScript objects: `state`, `actions`, `mutations`, and `getters`.
+
+At the end of the file I define a final object, which is an instance of the `Vuex.Store({})` object, that pulls all the other stub objects together, and then it is exported.
+
+```javascript
+// src/store/index.js
+
+import Vue from 'vue'  
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+const state = {  
+  // single source of data
+}
+
+const actions = {  
+  // asynchronous operations
+}
+
+const mutations = {  
+  // isolated data mutations
+}
+
+const getters = {  
+  // reusable data accessors
+}
+
+const store = new Vuex.Store({  
+  state,
+  actions,
+  mutations,
+  getters
+})
+
+export default store  
+```
+
+Ok, give me a few moments to explain the meaning of the `state`, `actions`, `mutations`, and `getters` objects.
+
+The `state` object will serve as the single source of truth where all the important application-level data is contained within the store. This `state` object will contain survey data that can be accessed and watched for changes by any components interested in them such as the Home component.
+
+The `actions` object is where I will define what are known as action methods. Action methods are referred to as being "dispatched" and they're used to handle asynchronous operations such as AJAX calls to an external service or API.
+
+The `mutations` object provides methods which are referred to being "committed" and serve as the one and only way to change the state of the data in the `state` object. When a mutation is committed any components that are referencing the now reactive data in the state object are updated with the new values, causing the UI to update and re-render its elements.
+
+The `getters` object contains methods also, but in this case they serve to access the `state` data utilizing some logic to return information. `getters` are useful for reducing code duplication and promote reusability across many components.
+
+The last necessary step to activate the store takes place back in src/main.js where I import the store module just created. Then down in the options object where the top level Vue instance is instantiated I add the imported store as a property. This should look as follows:
+
+```javascript
+// src/main.js
+
+import Vue from 'vue'  
+import App from './App'  
+import router from './router'  
+import store from './store'
+
+Vue.config.productionTip = false
+
+new Vue({  
+  el: '#app',
+  router,
+  store,
+  components: { App },
+  template: '<App/>'
+})
+```
+
+## Migrating the Home Component to Vuex
+
+I would like to start off utilizing vuex in the Survey application by migrating the way surveys are loaded into the Home component to use the vuex pattern. To begin I define and initialize an empty surveys array in the state object within **store/index.js**. This will be the location where all application level survey data will reside once pulled in by an AJAX request.
+
+```javascript
+const state = {  
+  // single source of data
+  surveys: []
+}
+```
+
+Now that the surveys have a place to reside I need to create an action method, `loadSurveys(...)`, that can be dispatched from the Home component (or any other component requiring survey data) to handle the asynchronous request to the mock AJAX function `fetchSurveys()`. To use `fetchSurveys()` I first need to import it from the api module then define the `loadSurveys(...)` action method to handle making the request.
+
+Actions often work in tandem with mutations in a pattern of performing asynchronous AJAX requests for data to a server followed by explicitly updating the store's `state` object with the fetched data. Once the mutation is committed then the parts of the application using the surveys will recognize there are updated surveys via Vue's reactivity system. Here the mutation I am defining is called `setSurveys(...)`.
+
+::: warning
+I am ready for this tutorial yet. Turn back here when you've done at least the half of [VueJs course](../vuejs2_course/getting-started.md).
+:::

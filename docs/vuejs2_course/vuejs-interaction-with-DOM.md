@@ -182,7 +182,7 @@ When you want to render a **String** of HTML directly from Vue instance, Vue has
   <h1 v-once>{{ title }}</h1>
   <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p>raw-HTML
   <hr>
-  <p>{{ completeLink }}</p>
+  <p v-html='completeLink'></p>
 </div>
 
 <script>
@@ -927,3 +927,11 @@ Make sure you really understand the different syntaxes you can use when binding 
 
 **Solution of the lecturer:**
 You can find the Code [on JSFiddle](https://jsfiddle.net/smax/jhj8cqdm/).
+
+## ASIDE
+
+I wanted to create a curve movement with a div: on [this link](https://jsfiddle.net/maykjony/jtb734ob/15/).
+
+Then I started to try different things, for example, `sin`, it's a very natural movement that can be found in nature; in light, sounde, vawes of oceans etc. see the example on [this link](https://jsfiddle.net/maykjony/jtb734ob/16/).
+
+Let's only move on Y axis, [link](https://jsfiddle.net/maykjony/jtb734ob/21/)

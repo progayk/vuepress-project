@@ -61,6 +61,10 @@ module.exports = {
                         text: 'VueJs Interaction with DOM',
                         link: '/vuejs2_course/vuejs-interaction-with-DOM',
                     },
+                    {
+                        text: 'Using Conditionals and Rendering Lists',
+                        link: '/vuejs2_course/using-conditionals-and-rendering-lists',
+                    }
                 ]
             },
             {
@@ -84,7 +88,8 @@ module.exports = {
             '/vuejs2_course/': [
                 '',
                 'getting-started',
-                'vuejs-interaction-with-DOM'
+                'vuejs-interaction-with-DOM',
+                'using-conditionals-and-rendering-lists'
             ],
             '/info/': [
                 ''
