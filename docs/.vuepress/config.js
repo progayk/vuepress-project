@@ -68,8 +68,17 @@ module.exports = {
                 ]
             },
             {
-                text: 'Info',
-                link: '/info/'
+                text: 'Chain Project',
+                link: '/chain-project/'
+            },
+            {
+                text: 'Express',
+                items: [
+                    {
+                        text: 'Into to Express',
+                        link: '/express-framework/intro-to-express'
+                    }
+                ]
             }
         ],
         sidebar: {
@@ -94,9 +103,14 @@ module.exports = {
             '/info/': [
                 ''
             ],
+            '/express-framework/': [
+                '',
+                'intro-to-express'
+            ],
             '/': [
                 ''
-            ]
+            ],
+
         }
     }
 }
