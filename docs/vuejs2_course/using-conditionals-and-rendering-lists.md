@@ -127,3 +127,150 @@ Let's you don't only want to display properties but also the index of the proper
   </ol>
 </div>
 ```
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/1/) to the example.
+
+## Using an Alternative v-for Syntax
+
+Let's say, instead of list we want to render the properties with different style.
+Just like before, we can use **\<template\>** tag which won't be rendered.
+
+```html
+<div id="app">
+  <template v-for="(ingredient, idx) in ingredients">
+    <h1>{{ingredient}}</h1>
+    <p>{{ idx }}</p>
+  </template>
+</div>
+```
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/2/) to the example.
+
+## Looping through options
+
+You can also loop through objects in arrays. Here I'm gonna loop through `persons`. You can also nest and get the values of the looped object.
+
+```html
+<div id="app">
+  <template v-for="(ingredient, idx) in ingredients">
+    <h1>{{ingredient}}</h1>
+    <p>{{ idx }}</p>
+  </template>
+  <hr>
+  <ul>
+    <li v-for="person in persons">
+      <span v-for="value in person">
+        {{ value}}
+      </span>
+    </li>
+  </ul>
+</div>
+```
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/3/) to the example.
+
+
+In addition to that we can also get kes of the looped object.
+
+```html
+<div id="app">
+  <template v-for="(ingredient, idx) in ingredients">
+    <h1>{{ingredient}}</h1>
+    <p>{{ idx }}</p>
+  </template>
+  <hr>
+  <ul>
+    <li v-for="person in persons">
+      <span v-for="(value, key) in person">
+        {{key}} - {{ value}}
+      </span>
+    </li>
+  </ul>
+</div>
+
+```
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/4/) to the example.
+
+
+Also, we can reach the index of the iteration:
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="person in persons">
+      <span v-for="(value, key, idx) in person">
+        {{ idx }}: {{key}} - {{ value}}
+      </span>
+    </li>
+  </ul>
+</div>
+```
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/5/) to the example.
+
+## Looping through a list of numbers
+
+If you only want to display iterated numbers, you can use:
+
+```html
+<div id="app">
+  <span v-for="n in 10">{{n}}</span>
+</div>
+
+```
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/6/) to the example.
+
+## Keeping track of elements when using v-for
+
+It's important to understand what happens behind the scene. Vuejs automatically proxies the changes to the elements. So, whenever a new item is added to the list, it will be rendered and displayed on the page automaticallyby Vuejs.
+
+```html
+<div id="app">
+  <button @click="ingredients.push('cheese')">Add item</button>
+  <button @click="ingredients.pop()">delete the last item</button>
+  <hr>
+  <template v-for="(ingredient, idx) in ingredients">
+    <h1>{{ingredient}}</h1>
+    <p>{{ idx }}</p>
+  </template>
+</div>
+
+```
+
+::: danger
+
+It does not keep track of the element it created, it only update the list item. 
+
+:::
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/9/) to the example.
+
+If you want to keep track of elements which is screated by a loop, for example, you need assign a unique key to that list item.
+
+```html
+<div id="app">
+  <button @click="ingredients.push('cheese')">Add item</button>
+  <button @click="ingredients.pop()">delete the last item</button>
+  <hr>
+  <template v-for="(ingredient, idx) in ingredients"
+  :key="idx">
+    <h1>{{ingredient}}</h1>
+    <p>{{ idx }}</p>
+  </template>
+</div>
+```
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/10/) to the example.
+
+## Assignment-5: Conditionals & Lists
+
+Here is the [link](https://jsfiddle.net/maykjony/8bz8h970/11/) to the solution. Also you can find the folder related to the exercises under `/docs/extras/` folder.
+
+## Module Resources & Useful Links
+### Section 3, Lecture 45
+
+**Useful Links:**
+
+Official Docs - [Conditionals](http://vuejs.org/guide/conditional.html)
+Official Docs - [Lists](http://vuejs.org/guide/list.html)

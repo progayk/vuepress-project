@@ -69,7 +69,12 @@ module.exports = {
             },
             {
                 text: 'Chain Project',
-                link: '/chain-project/'
+                items: [
+                    {
+                        text: "Day 1",
+                        link: 'chain-project/day-1'
+                    }
+                ]
             },
             {
                 text: 'Express',
@@ -77,6 +82,15 @@ module.exports = {
                     {
                         text: 'Into to Express',
                         link: '/express-framework/intro-to-express'
+                    }
+                ]
+            },
+            {
+                text: 'flask',
+                items: [
+                    {
+                        text: 'Flask Mega Tut',
+                        link: '/flask-mega-tutorial/part-1-hello-world'
                     }
                 ]
             }
@@ -103,9 +117,17 @@ module.exports = {
             '/info/': [
                 ''
             ],
+            '/chain-project/': [
+                '',
+                'day-1'
+            ],
             '/express-framework/': [
                 '',
                 'intro-to-express'
+            ],
+            '/flask-mega-tutorial/': [
+                '',
+                'part-1-hello-world'
             ],
             '/': [
                 ''
