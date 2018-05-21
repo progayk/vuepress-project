@@ -58,15 +58,15 @@ module.exports = {
                         link: '/vuejs2_course/getting-started',
                     },
                     {
-                        text: 'VueJs Interaction with DOM',
+                        text: 'Interaction with DOM',
                         link: '/vuejs2_course/vuejs-interaction-with-DOM',
                     },
                     {
-                        text: 'Using Conditionals and Rendering Lists',
+                        text: 'Conditionals and Lists',
                         link: '/vuejs2_course/conditionals-and-lists',
                     },
                     {
-                        text: 'First Course Project - The Monster Slayer',
+                        text: 'Project: The Monster Slayer',
                         link: '/vuejs2_course/project-monster-slayer'
                     }
                 ]
@@ -103,6 +103,15 @@ module.exports = {
                     {
                         text: 'Chapter 2: Templates',
                         link: '/flask-mega-tutorial/chapter-2-templates'
+                    }
+                ]
+            },
+            {
+                text: 'kotlin',
+                items: [
+                    {
+                        text: 'Chapter 1: Getting Started',
+                        link: '/kotlin-course/getting-started'
                     }
                 ]
             }
@@ -143,6 +152,10 @@ module.exports = {
                 '',
                 'part-1-hello-world',
                 'chapter-2-templates'
+            ],
+            '/kotlin-course/': [
+                '',
+                'getting-started'
             ],
             '/': [
                 ''

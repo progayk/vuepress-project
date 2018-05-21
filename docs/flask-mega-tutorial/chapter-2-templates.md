@@ -207,3 +207,4 @@ In this template I used the `block` control statement to define the place where 
 {% endblock %}
 ```
 Since the `base.html` template will now take care of the general page structure, I have removed all those elements from `index.html` and left only the content part. The `extends` statement establishes the inheritance link between the two templates, so that Jinja2 knows that when it is asked to render `index.html` it needs to embed it inside `base.html`. The two templates have matching `block` statements with name content, and this is how Jinja2 knows how to combine the two templates into one. Now if I need to create additional pages for the application, I can create them as derived templates from the same base.html template, and that is how I can have all the pages of the application sharing the same look and feel without duplication.
+
