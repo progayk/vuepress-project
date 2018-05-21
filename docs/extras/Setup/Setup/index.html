@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+    <title>Monster Slayer</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">YOU</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" :style="{ width: userHealth + '%' }" style="background-color: green; margin: 0; color: white;">
+                    {{ userHealth }}
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTER</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" :style="{ width: monsterHealth + '%' }" style="background-color: green; margin: 0; color: white;">
+                    {{ monsterHealth }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-show="!isGameOn">
+        <div class="small-12 columns">
+            <button id="start-game" @click="startNewGame">START NEW GAME</button>
+        </div>
+    </section>
+    <section class="row controls" v-show="isGameOn">
+        <div class="small-12 columns">
+            <button id="attack" @click="userMakeNormalAttack">ATTACK</button>
+            <button id="special-attack" @click="userMakeSpecialAttack">SPECIAL ATTACK</button>
+            <button id="heal" @click="userHealSelf">HEAL</button>
+            <button id="give-up" @click="userGiveUp">GIVE UP</button>
+        </div>
+    </section>
+    <section class="row log">
+        <div class="small-12 columns" v-show="isGameOn">
+            <ul>
+                <li v-for="(log, index) in actionsLogReverse"
+                :key="index">
+                    <span 
+                    :class="[{'player-turn': !isUserTurn},
+                    {'monster-turn': isUserTurn}]">
+                        {{ log.fromWhom }} hit to {{ log.toWhom }} for {{ log.attackPoint }} points
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

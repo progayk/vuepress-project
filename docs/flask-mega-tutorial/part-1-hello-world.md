@@ -1,9 +1,9 @@
 ---
-title: 'Flask Mega Tutorial'
+title: 'Chapter 1: Hello World Application'
 sidebarDepth: 3
 ---
 
-# Flask Mega Tutorial
+# Chapter 1: Hello World Application
 
 
 ## Credits

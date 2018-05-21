@@ -1,5 +1,5 @@
 ---
-title: 'VueJs Interaction with DOM'
+title: 'Interaction with DOM'
 sidebarDepth: 3
 ---
 
@@ -935,3 +935,6 @@ I wanted to create a curve movement with a div: on [this link](https://jsfiddle.
 Then I started to try different things, for example, `sin`, it's a very natural movement that can be found in nature; in light, sounde, vawes of oceans etc. see the example on [this link](https://jsfiddle.net/maykjony/jtb734ob/16/).
 
 Let's only move on Y axis, [link](https://jsfiddle.net/maykjony/jtb734ob/21/)
+
+
+## 

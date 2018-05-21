@@ -63,7 +63,11 @@ module.exports = {
                     },
                     {
                         text: 'Using Conditionals and Rendering Lists',
-                        link: '/vuejs2_course/using-conditionals-and-rendering-lists',
+                        link: '/vuejs2_course/conditionals-and-lists',
+                    },
+                    {
+                        text: 'First Course Project - The Monster Slayer',
+                        link: '/vuejs2_course/project-monster-slayer'
                     }
                 ]
             },
@@ -82,6 +86,10 @@ module.exports = {
                     {
                         text: 'Into to Express',
                         link: '/express-framework/intro-to-express'
+                    },
+                    {
+                        text: 'Intermediate Express',
+                        link: '/express-framework/intermediate-express'
                     }
                 ]
             },
@@ -89,8 +97,12 @@ module.exports = {
                 text: 'flask',
                 items: [
                     {
-                        text: 'Flask Mega Tut',
+                        text: 'Chapter 1: Hello World',
                         link: '/flask-mega-tutorial/part-1-hello-world'
+                    },
+                    {
+                        text: 'Chapter 2: Templates',
+                        link: '/flask-mega-tutorial/chapter-2-templates'
                     }
                 ]
             }
@@ -112,7 +124,8 @@ module.exports = {
                 '',
                 'getting-started',
                 'vuejs-interaction-with-DOM',
-                'using-conditionals-and-rendering-lists'
+                'conditionals-and-lists',
+                'project-monster-slayer'
             ],
             '/info/': [
                 ''
@@ -123,11 +136,13 @@ module.exports = {
             ],
             '/express-framework/': [
                 '',
-                'intro-to-express'
+                'intro-to-express',
+                'intermediate-express'
             ],
             '/flask-mega-tutorial/': [
                 '',
-                'part-1-hello-world'
+                'part-1-hello-world',
+                'chapter-2-templates'
             ],
             '/': [
                 ''

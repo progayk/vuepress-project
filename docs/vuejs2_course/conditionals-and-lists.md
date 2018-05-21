@@ -1,9 +1,9 @@
 ---
-title: 'VueJs Interaction with DOM'
+title: 'Conditionals and Lists'
 sidebarDepth: 3
 ---
 
-# VueJs Interaction with DOM
+# Conditionals and Lists
 
 
 ## Credits
