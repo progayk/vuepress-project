@@ -47,6 +47,10 @@ module.exports = {
                     {
                         text: 'Vue2+Flask SPA Survey App',
                         link: '/guides/vue-flask-quiz'
+                    },
+                    {
+                        text: 'VueFire: Vuejs + Firebase',
+                        link: '/guides/vuefire-vue-firebase-crud'
                     }
                 ],
             },
@@ -103,6 +107,10 @@ module.exports = {
                     {
                         text: 'Chapter 2: Templates',
                         link: '/flask-mega-tutorial/chapter-2-templates'
+                    },
+                    {
+                        text: 'Chapter 3: Web Forms',
+                        link: '/flask-mega-tutorial/chapter-3-web-forms'
                     }
                 ]
             },
@@ -127,7 +135,8 @@ module.exports = {
                 'spanish-app',
                 'nodejs-docs',
                 'bakermill-menu',
-                'vue-flask-quiz'
+                'vue-flask-quiz',
+                'vuefire-vue-firebase-crud'
             ],
             '/vuejs2_course/': [
                 '',
@@ -151,7 +160,8 @@ module.exports = {
             '/flask-mega-tutorial/': [
                 '',
                 'part-1-hello-world',
-                'chapter-2-templates'
+                'chapter-2-templates',
+                'chapter-3-web-forms'
             ],
             '/kotlin-course/': [
                 '',

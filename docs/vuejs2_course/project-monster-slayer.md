@@ -275,8 +275,8 @@ Similar to attack functions we will create the logic for `Heal` button. When the
 ```javascript
 userHealSelf: function() {
 		// user health should not be over 100 points
-		if (this.userHealth < 91) {
-			this.userHealth += 10;
+		if (this.userHealth >= 91) {
+			this.userHealth = 100;
 		}
 		this.willMonsterAttack();
 	},
@@ -356,4 +356,59 @@ To be able to differentate the actions add color to each side(user and monster).
 
 
 ```css
+```
+
+### ASIDE
+
+It was a very difficult task to assign classes dynamically to list items. 
+
+::: tip
+When code gets complicated it's a good idea just get out of the project and work explicitly to be able to analyze the task seperately and deeply.
+:::
+
+
+Here is an [example](https://jsfiddle.net/maykjony/8bz8h970/12/) of what I created without intention.
+
+```html
+<div id='app'>
+  <button @click="addLog">add player</button>
+	<ul>
+	  <li v-for="log in logs" :class="logClass">
+	    {{ log.fromWhom }}
+	  </li>
+	</ul>
+</div>
+```
+
+The color of all items in the list changes each time.
+
+```javascript
+new Vue({
+	el: '#app',
+  data: {
+  	logs: [],
+    isTrue: false,
+    whosTurn: ''
+  },
+  methods: {
+  	addLog () {
+    	this.isTrue = !this.isTrue
+    	this.logs.push({'fromWhom': 'player'})
+    }
+  },
+  computed: {
+  	logClass () {
+    	return this.isTrue ? 'red' : 'blue'
+    }
+  }
+})
+```
+
+```css
+.red {
+  color: red;
+}
+.blue {
+  color: blue;
+}
 ```

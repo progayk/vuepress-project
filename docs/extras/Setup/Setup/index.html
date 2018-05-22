@@ -45,11 +45,9 @@
             <ul>
                 <li v-for="(log, index) in actionsLogReverse"
                 :key="index">
-                    <span 
-                    :class="[{'player-turn': !isUserTurn},
-                    {'monster-turn': isUserTurn}]">
-                        {{ log.fromWhom }} hit to {{ log.toWhom }} for {{ log.attackPoint }} points
-                    </span>
+                <span :class="">
+                    {{ log.fromWhom }} hit to {{ log.toWhom }} for {{ log.attackPoint }} points
+                </span>
                 </li>
             </ul>
         </div>

@@ -1,12 +1,12 @@
 ---
-title: Firebase-Vue2 Authentication (on dev)
+title: Firebase-Vue2 Authentication
 sidebarDepth: 3
 ---
 
 # Firebase + Vue2 Authentication System
 
 This tutorial contains resources from
-[this tutorial](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c) on [meduim](https://medium.com).
+[this tutorial](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c) on [medium](https://medium.com).
 
 In this tutorial, we will see how to quickly build a
 web application with an authentication system using Vue 2, vue-router and Firebase.
@@ -954,7 +954,7 @@ To be sure that you are now logged out from Firebase, you can refresh the page o
 
 Now, let’s **sign in** again, but before that, let’s change the code so that we can be redirect to the authenticate part of the app after login.
 
-```html
+```javascript
 <!-- omitted for brevity -->
   methods: {
     signIn: function () {
@@ -995,7 +995,6 @@ Let’s implement the same thing for the `AppSignup` component.
 ```
 
 ::: tip BIR HIGHLY IMPORTANT
-
 Now, after a new account creation, the user will also be redirected to the `HelloWorld` view !
 
 You may noticed that i turned the callback functions in `signInWithEmailAndPassword`, `createUserWithEmailAndPassword`, and `signOut` in **ES6 arrow functions**. Why?
@@ -1005,5 +1004,8 @@ Simply because method definition `(function name() {})`, have their own `this` c
 With ES6 arrow function, this is lexical, meaning that it does not create its own this context. Instead, this has the original meaning from the enclosing context.
 
 By using ES6 arrow function, we can access `this.$router` and let the redirection take place.
-
 :::
+
+We now have a small Vue app using Firebase authentication system !
+
+All the sources are available on Github: [github.com/CaptainYouz/vue-firebase-tutorial](https://github.com/CaptainYouz/vue-firebase-tutorial).

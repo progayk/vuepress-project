@@ -104,5 +104,77 @@ You can also manipulate the data both on server side and in the template.
 
 ## EJS: Conditionals and Loops
 
+### EJS Control Flow
 
+* Show examples of control flow in EJS templates
+* Write if staatements in an EJS file
+* Write loops in an EJS file
+
+```
+Loop through all posts
+	make an entry div
+		title
+		tagline
+	...
+
+```
+
+In this template we will use a conditional. When using conditional the template syntax of EJS changes slightly. It becomes `<% ... %>`, instead of `<%= ... %>`.
+
+```html
+<h1>You fell in love with: <%= thingVar.toUpperCase() %> </h1>
+
+<% if (thingVar.toLowerCase() === 'pasha') { %>
+<h2>GOOD Choice! Pasha is the best!</h2>
+<% } else { %>
+<h3>You should have said Pasha!</h3>
+<% }  %>
+<p>P.s. this is the love.ejs file</p>
+```
+
+### Loops
+
+I want to loop through items in a list, The syntax is very similar to what we used in conditionals.
+
+```html
+<h1>The Posts Page</h1>
+
+<h2>ZipCode and City</h2>
+<ul>
+<% for(var i = 0; i < posts.length; i++) { %>
+    <li>post title: <%= posts[i].title %>, post name: <%= posts[i].name %></li>
+<% } %>
+</ul>
+```
+
+Also we can use `forEach()`.
+
+```html
+<h2>company name and suffix</h2>
+<ul>
+<% comps.forEach(function(comp) { %>
+    <li><%= comp.name %>, <%= comp.suffix %></li>
+<% }) %>
+</ul>
+```
+
+
+## Faker.fake()
+
+[GitHub Repo](https://github.com/marak/Faker.js/)
+
+faker.js contains a super useful generator method Faker.fake for combining faker API methods using a mustache string format.
+
+```javascript
+var faker = require('faker');
+
+var randomName = faker.name.findName(); // Rowan Nikolaus
+var randomEmail = faker.internet.email(); // Kassandra.Haley@erich.biz
+var randomCard = faker.helpers.createCard(); // random contact card containing many properties
+```
+
+```javascript
+console.log(faker.fake("{{name.lastName}}, {{name.firstName}} {{name.suffix}}"));
+// outputs: "Marks, Dean Sr."
+```
 

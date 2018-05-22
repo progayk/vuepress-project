@@ -134,7 +134,7 @@ In order to run **postman** hit `fn`+`alt`+`F2` and write 'postman' and then hit
 
 * Explain what the package.json does.
 
-Inside this file there are meta data about the application. `json` stands for **JavaScript Object Notation**. It's just a data type, a way of formatting text in a file to represent sturcture.
+Inside this file there are meta data about the application. `json` stands for **JavaScript Object Notation**. It's just a data type, a way of formatting text in a file to represent structure.
 
 * Use `npm init` to create a new package.json.
 
@@ -171,7 +171,7 @@ Now, let's install a package with the `--save` flag.
 npm install express --save
 ```
 
-Now, open the `package.json` file again, and you will see that express and it's dependencies are automatically saved into out .json file.
+Now, open the `package.json` file again, and you will see that express and it's dependencies are automatically saved into `package.json` file.
 
 ```json{11,12,13}
 {
@@ -212,7 +212,7 @@ app.get("*", function(req, res) {
 // omitted for brevity
 ```
 
-This code will run whenever we make a GET request aside one of the existing routes.
+This code will run whenever we make a **GET** request aside one of the existing routes.
 
 ::: tip
 Whenever you want to show to the user that the page doesn't exist, you can accomplish it by configuring non-existing routes.
@@ -242,7 +242,7 @@ app.get("/r/:subredditName/comments/:id/:title", function(req, res) {
 })
 ```
 
-Go and chech this path `blabla.com/r/soccer/comments/234/my_first_soccer` and you will see the `welcome to comments page.` message.
+Go and check this path `blabla.com/r/soccer/comments/234/my_first_soccer` and you will see the `welcome to comments page.` message.
 
 We can also pass the path as a paramater into the **callback** function. All the information is send with `req` paramater, so we can reach those parameters by writing
 
@@ -284,15 +284,15 @@ app.get("/r/:subredditName", function(req, res) {
 2. Create a package.json using `npm init` and add express as a dependency.
 3. In your main app.js file, add 3 different routes.
 
-Visiting "/" should print "Hi there, welcome to my assignment!"
-===============================================================
-Visiting "/speak/pig" should print "The pig says 'Oink'"
-Visiting "/speak/cow" should print "The cow says 'Moo'"
-Visiting "/speak/dog" should print "The dog says 'Woof woof!'"
-===============================================================
-Visiting "/repeat/hello/3" should print "hello hello hello"
-Visiting "/repeat/hello/5" should print "hello hello hello hello hello"
-Visiting "/repeat/blah/2" should print "blah blah"
+* Visiting "/" should print "Hi there, welcome to my assignment!"
+
+* Visiting "/speak/pig" should print "The pig says 'Oink'"
+* Visiting "/speak/cow" should print "The cow says 'Moo'"
+* Visiting "/speak/dog" should print "The dog says 'Woof woof!'"
+
+* Visiting "/repeat/hello/3" should print "hello hello hello"
+* Visiting "/repeat/hello/5" should print "hello hello hello hello hello"
+* Visiting "/repeat/blah/2" should print "blah blah"
 
 If a user visits any other route, print:
 "Sorry, page not found... What are you doing with your life?"
@@ -399,7 +399,6 @@ app.get("/repeat/:message/:times", function(req, res) {
     for (let i = 0; i < times; i++) {
         result += message + " ";
     }
-        
     res.send(result);
 })
 
@@ -413,4 +412,5 @@ app.listen(process.env.PORT, process.env.IP, function() {
 })
 ```
 
-Better structered. Now, We don't have to repeat ourselves, because we have the logic now.
+Better structured. Now, We don't have to repeat ourselves, because we have the logic now.
+

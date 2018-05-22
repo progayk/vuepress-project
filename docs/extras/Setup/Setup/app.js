@@ -4,10 +4,12 @@ var app = new Vue({
 		isGameOn: false,
 		userHealth: 100,
 		monsterHealth: 100,
-		actionsLog: [],
-		isUserTurn: false
+		actionsLog: []
 	},
 	methods: {
+		// ==================== 
+		// START NEW GAME BUTTONS
+		// ==================== 
 		startNewGame: function() {
 			this.isGameOn = !this.isGameOn;
 			this.userHealth = 100;
@@ -15,19 +17,21 @@ var app = new Vue({
 			this.actionsLog = [];
 		},
 		willMonsterAttack: function() {
-			if (this.gameIsActive) {
-				this.monsterMakeNormalAttack();
-			} else {
-				this.startNewGame();
-			}
+			// Add a deloy before monster hits
+			var vm = this;
+			setTimeout(function() {
+				if (vm.gameIsActive) {
+				vm.monsterMakeNormalAttack();
+				} else {
+					vm.startNewGame();
+				}
+			}, 200);
 		},
-		changeTurn: function() {
-			this.isUserTurn = !this.isUserTurn;
-		},
+		// ==================== 
+		// ACTIONS LOG
+		// ==================== 
 		keepActionsLog: function(fromWhom, toWhom, attackPoint) {
-			// change the turn to assign class accordingly
-			this.changeTurn();
-			console.log(this.isUserTurn);
+			// this.logClass(fromWhom);
 			this.actionsLog.push({ fromWhom: fromWhom, toWhom: toWhom, attackPoint: attackPoint});
 		},
 		normalAttackHitPointGenerator: function() {
@@ -35,18 +39,21 @@ var app = new Vue({
 			var hitPoint = Math.floor(Math.random() * (15 - 5) + 5);
 			return hitPoint;
 		},
+		// =============== 
+		// GAME ON BUTTONS
+		// =============== 
 		userMakeNormalAttack: function() {
 			// Hit the monster
 			var attackPoint = this.normalAttackHitPointGenerator();
 			this.monsterHealth -= attackPoint;
-			this.keepActionsLog('you', 'monster', parseInt(attackPoint));
+			this.keepActionsLog('player', 'monster', parseInt(attackPoint));
 			this.willMonsterAttack();
 		},
 		monsterMakeNormalAttack: function() {
 			// Hit the monster
 			var attackPoint = this.normalAttackHitPointGenerator();
 			this.userHealth -= attackPoint;
-			this.keepActionsLog('monster', 'you', parseInt(attackPoint))
+			this.keepActionsLog('monster', 'player', parseInt(attackPoint))
 			if (!this.gameIsActive) {
 				this.startNewGame();
 			}
@@ -55,13 +62,13 @@ var app = new Vue({
 			// Generates a random num between 10 - 25
 			var specialAttackHitPoint = Math.floor(Math.random() * (25 - 10) + 10);
 			this.monsterHealth -= specialAttackHitPoint;
-			this.keepActionsLog('you', 'monster', parseInt(specialAttackHitPoint));
+			this.keepActionsLog('player', 'monster', parseInt(specialAttackHitPoint));
 			this.willMonsterAttack();
 		},
 		userHealSelf: function() {
 			// user health should not be over 100 points
-			if (this.userHealth < 91) {
-				this.userHealth += 10;
+			if (this.userHealth >= 91) {
+				this.userHealth = 100;
 			}
 			this.willMonsterAttack();
 		},
