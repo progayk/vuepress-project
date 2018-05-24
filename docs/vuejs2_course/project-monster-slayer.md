@@ -301,46 +301,27 @@ userGiveUp: function() {
 
 Inside of the last div element in the page we will log the actions that happen during the game. When an attack or healing happens we will write the information into a list and display below the page. The most recent action should be displayed at the top of the list.
 
-Instead of a `data` property we will pass the array in a reversed format. So, create a `computed` property and when the `actionsLog` array is updated, execute reversing function. To not reverse it every time we need to copy and past with below way:
+Instead of a `data` property we will pass the array in a reversed format. So, create a `computed` property and when the `actionsLog` array is updated, we will add the new object at the **beggining** of the array.
+
 
 ```javascript
-function reverseArray(array) {
-    return array.slice(0).reverse();
-}
-```
-Create `actionsLogReverse` function. 
-
-```javascript
-computed: {
-	gameIsActive: function() {
-		if (this.monsterHealth <= 0) {
-			alert("You win the game!");
-			// this.startNewGame();
-			return false;
-		} else if (this.userHealth <= 0) {
-			alert("You lost the game!");
-			return false;
-			// this.startNewGame();
-		}
-		return true;
-	},
-	actionsLogReverse: function() {
-		return this.actionsLog.slice(0).reverse();
-	}
+keepActionsLog: function(fromWhom, toWhom, attackPoint) {
+	// this.logClass(fromWhom);
+	this.actionsLog.unshift({ fromWhom: fromWhom, toWhom: toWhom, attackPoint: attackPoint});
 }
 ```
 
-Implement into HTML. We will use `v-for` directive to iterate over the `actionsLogReverse` array. 
+Implement in HTML. We will use `v-for` directive to iterate over the `actionsLog` array. 
+
+Only show the `log` section if there is any item in `actionsLog`. 
 
 ```html
-<section class="row log">
-    <div class="small-12 columns" v-show="isGameOn">
+<section class="row log" v-if="actionsLog.length > 0">
+    <div class="small-12 columns">
         <ul>
-            <li v-for="(log, index) in actionsLogReverse"
-            :key="index">
-                <span :class="{'player-turn': true}">
-                    {{ log.fromWhom }} hit to {{ log.toWhom }} for {{ log.attackPoint }} points
-                </span>
+            <li v-for="log in actionsLog"
+            :class="log.fromWhom + '-turn'">
+                {{ log.fromWhom }} hit to {{ log.toWhom }} for {{ log.attackPoint }} points
             </li>
         </ul>
     </div>
@@ -353,9 +334,17 @@ To be able to use hyphen `-` inside `:class` you have to put it inside quotes `'
 
 To be able to differentate the actions add color to each side(user and monster).
 
-
-
 ```css
+
+.log ul .player-turn {
+    color: blue;
+    background-color: #e4e8ff;
+}
+
+.log ul .monster-turn {
+    color: red;
+    background-color: #ffc0c1;
+}
 ```
 
 ### ASIDE
@@ -411,4 +400,117 @@ new Vue({
 .blue {
   color: blue;
 }
+```
+
+## Finished Code
+
+**app.js**
+
+I've refactor the code. We don't have `keepActionsLog` funtion anymore. Instead I added `unshift()` method to `actionsLog` directly for each action. 
+
+```javascript
+var app = new Vue({
+	el: '#app',
+	data: {
+		isGameOn: false,
+		userHealth: 100,
+		monsterHealth: 100,
+		actionsLog: []
+	},
+	methods: {
+		// ==================== 
+		// START NEW GAME BUTTONS
+		// ==================== 
+		startNewGame: function() {
+			this.isGameOn = !this.isGameOn;
+			this.userHealth = 100;
+			this.monsterHealth = 100;
+			this.actionsLog = [];
+		},
+		willMonsterAttack: function() {
+			// Add a deloy before monster hits
+			var vm = this;
+			setTimeout(function() {
+				if (vm.gameIsActive) {
+					vm.monsterMakeNormalAttack();
+				} else {
+					vm.startNewGame();
+				}
+			}, 200);
+		},
+		normalAttackHitPointGenerator: function() {
+			// Generates a random num between 5 - 15
+			var max = 15;
+			var min = 5;
+			var hitPoint = Math.floor(Math.random() * (max - min) + min);
+			return hitPoint;
+		},
+		// =============== 
+		// GAME ON BUTTONS
+		// =============== 
+		userMakeNormalAttack: function() {
+			// Hit the monster
+			var attackPoint = this.normalAttackHitPointGenerator();
+			this.monsterHealth -= attackPoint;
+			this.actionsLog.unshift({
+				fromWhom: 'player',
+				text: 'Player hits to monster for ' + parseInt(attackPoint) + ' points'
+			});
+			this.willMonsterAttack();
+		},
+		monsterMakeNormalAttack: function() {
+			// Hit the monster
+			var attackPoint = this.normalAttackHitPointGenerator();
+			this.userHealth -= attackPoint;
+			this.actionsLog.unshift({
+				fromWhom: 'monster',
+				text: 'monster hits to player for ' + parseInt(attackPoint) + ' points'
+			});
+			if (!this.gameIsActive) {
+				this.startNewGame();
+			}
+		},
+		userMakeSpecialAttack: function() {
+			// Generates a random num between 10 - 25
+			var specialAttackHitPoint = Math.floor(Math.random() * (25 - 10) + 10);
+			this.monsterHealth -= specialAttackHitPoint;
+			this.actionsLog.unshift({
+				fromWhom: 'player',
+				text: 'Player hits to monster for ' + parseInt(specialAttackHitPoint) + ' points'
+			});
+			this.willMonsterAttack();
+		},
+		userHealSelf: function() {
+			// user health should not be over 100 points
+			if (this.userHealth >= 91) {
+				this.userHealth = 100;
+			} else {
+				this.userHealth += 10;
+			}
+			this.actionsLog.unshift({
+				fromWhom: 'player',
+				text: 'Player heals self for 10 points'
+			});
+			// Syntactic Sugar: 
+			// this.userHealth >= 91 ? this.userHealth = 100 : this.userHealth += 10;
+			this.willMonsterAttack();
+		},
+		userGiveUp: function() {
+			alert("You gave up, Coward!");
+			this.isGameOn = !this.isGameOn;
+		}
+	},
+	computed: {
+		gameIsActive: function() {
+			if (this.monsterHealth <= 0) {
+				alert("You win the game!");
+				return false;
+			} else if (this.userHealth <= 0) {
+				alert("You lost the game!");
+				return false;
+			}
+			return true;
+		}
+	}
+})
 ```

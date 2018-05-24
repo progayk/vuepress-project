@@ -72,6 +72,10 @@ module.exports = {
                     {
                         text: 'Project: The Monster Slayer',
                         link: '/vuejs2_course/project-monster-slayer'
+                    },
+                    {
+                        text: 'Vue Instance',
+                        link: '/vuejs2_course/vue-instance'
                     }
                 ]
             },
@@ -122,6 +126,19 @@ module.exports = {
                         link: '/kotlin-course/getting-started'
                     }
                 ]
+            },
+            {
+                text: 'Firebase Docs',
+                items: [
+                    {
+                        text: 'Cloud Firestore',
+                        link: '/firebase-docs/cloud-firestore'
+                    },
+                    {
+                        text: 'SSR Vue Apps with Nuxt.js',
+                        link: '/firebase-docs/ssr-vue-apps-with-nuxtjs'
+                    }
+                ]
             }
         ],
         sidebar: {
@@ -143,7 +160,8 @@ module.exports = {
                 'getting-started',
                 'vuejs-interaction-with-DOM',
                 'conditionals-and-lists',
-                'project-monster-slayer'
+                'project-monster-slayer',
+                'vue-instance'
             ],
             '/info/': [
                 ''
@@ -166,6 +184,11 @@ module.exports = {
             '/kotlin-course/': [
                 '',
                 'getting-started'
+            ],
+            '/firebase-docs/': [
+                '',
+                'cloud-firestore',
+                'ssr-vue-apps-with-nuxtjs'
             ],
             '/': [
                 ''

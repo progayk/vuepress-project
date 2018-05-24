@@ -40,14 +40,12 @@
             <button id="give-up" @click="userGiveUp">GIVE UP</button>
         </div>
     </section>
-    <section class="row log">
-        <div class="small-12 columns" v-show="isGameOn">
+    <section class="row log" v-if="actionsLog.length > 0">
+        <div class="small-12 columns">
             <ul>
-                <li v-for="(log, index) in actionsLogReverse"
-                :key="index">
-                <span :class="">
-                    {{ log.fromWhom }} hit to {{ log.toWhom }} for {{ log.attackPoint }} points
-                </span>
+                <li v-for="log in actionsLog"
+                :class="log.fromWhom + '-turn'">
+                    {{ log.text }}
                 </li>
             </ul>
         </div>

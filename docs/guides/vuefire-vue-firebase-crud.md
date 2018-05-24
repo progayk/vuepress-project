@@ -36,6 +36,9 @@ npm install
 
 Install `firebase` and `vuefire` which allows us to to use `firebase` inside our Vue application.
 
+
+## Install firebase and vuefire-project
+
 ```bash
 npm install firebase vuefire
 ```
@@ -44,8 +47,6 @@ npm install firebase vuefire
 npm run dev
 code .
 ```
-
-## Install firebase and vuefire
 
 Open the project and remove everything from `App.vue`.
 
@@ -66,7 +67,7 @@ const app = initializeApp({
 });
 
 export const db = app.database();
-export const namesRef = fb.ref('names');
+export const namesRef = db.ref('names');
 ```
 
 Go to `main.js` and import the `./firebase` and import `VueFire`
@@ -87,7 +88,7 @@ new Vue({
 
 ## Template
 
-Create template for 
+Create template for `App.vue`.
 
 Bind the `name` value to `input` tag. This will make Vue to store `name` value and bind it to `name` key inside `data` property.
 
@@ -178,7 +179,7 @@ methods: {
 		namesRef.push({name: this.name, edit: false});
 	},
 	removeName(key) {
-		namesRif.child(key).remove();
+		namesRef.child(key).remove();
 	}
 }
 ```
