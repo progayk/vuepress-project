@@ -84,7 +84,11 @@ module.exports = {
                 items: [
                     {
                         text: "Day 1",
-                        link: 'chain-project/day-1'
+                        link: '/chain-project/day-1'
+                    },
+                    {
+                        text: "List Clinics",
+                        link: '/chain-project/list-companies-firebase-vue'
                     }
                 ]
             },
@@ -168,7 +172,8 @@ module.exports = {
             ],
             '/chain-project/': [
                 '',
-                'day-1'
+                'day-1',
+                'list-companies-firebase-vue'
             ],
             '/express-framework/': [
                 '',
