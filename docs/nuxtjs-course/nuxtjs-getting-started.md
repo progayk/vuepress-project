@@ -76,3 +76,4 @@ For example, when you create a new file `users.vue` into `pages/` folder, this w
 ## Course Outline
 
 ![course outline](../images/course-outline.png)
+

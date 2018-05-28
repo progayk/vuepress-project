@@ -158,6 +158,10 @@ module.exports = {
                     {
                         text: 'Getting Started',
                         link: '/nuxtjs-course/nuxtjs-getting-started'
+                    },
+                    {
+                        text: 'Pages, Routes, Views',
+                        link: '/nuxtjs-course/pages-routes-views'
                     }
                 ]
             }
@@ -191,7 +195,8 @@ module.exports = {
             ],
             '/nuxtjs-course/': [
                 '',
-                'nuxtjs-getting-started'
+                'nuxtjs-getting-started',
+                'pages-routes-views'
             ],
             '/chain-project/': [
                 '',
