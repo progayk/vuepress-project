@@ -14,3 +14,13 @@ Creating native-like animations and flowless transtions on web pages is a though
 ## Content
 
 [[toc]]
+
+## What is Vue.js
+
+Is frontend javascript framework.
+
+* Mixture of Angular and React.js
+* Included Router + State Management
+* Build UI Widgets or complete Single-Page-Applications (SPAs)
+
+It's also very light-weight

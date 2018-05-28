@@ -73,7 +73,6 @@ npm run dev
 ```javascript
 import { initializeApp } from 'firebase';
 
-
 // Initialize Firebase
 // TODO: Replace with your project's customized code snippet
 var config = {
@@ -88,9 +87,10 @@ firebase.initializeApp(config);
 
 const firestore = firebase.firestore();
 
+// I was getting an error that says I need to add these lines of code
+// or my app may break. 
 const settings = {timestampsInSnapshots: true};
 firestore.settings(settings);
-
 
 export const companiesRef = firestore.collection('clinics');
 ```

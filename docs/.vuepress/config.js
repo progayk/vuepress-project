@@ -76,6 +76,14 @@ module.exports = {
                     {
                         text: 'Vue Instance',
                         link: '/vuejs2_course/vue-instance'
+                    },
+                    {
+                        text: 'Dev Workflow (vue-cli, webpack)',
+                        link: '/vuejs2_course/dev-workflow-vuecli-webpack'
+                    },
+                    {
+                        text: 'Vue Components',
+                        link: '/vuejs2_course/vue-components'
                     }
                 ]
             },
@@ -143,6 +151,15 @@ module.exports = {
                         link: '/firebase-docs/ssr-vue-apps-with-nuxtjs'
                     }
                 ]
+            },
+            {
+                text: 'NuxtJS',
+                items: [
+                    {
+                        text: 'Getting Started',
+                        link: '/nuxtjs-course/nuxtjs-getting-started'
+                    }
+                ]
             }
         ],
         sidebar: {
@@ -165,10 +182,16 @@ module.exports = {
                 'vuejs-interaction-with-DOM',
                 'conditionals-and-lists',
                 'project-monster-slayer',
-                'vue-instance'
+                'vue-instance',
+                'dev-workflow-vuecli-webpack',
+                'vue-components'
             ],
             '/info/': [
                 ''
+            ],
+            '/nuxtjs-course/': [
+                '',
+                'nuxtjs-getting-started'
             ],
             '/chain-project/': [
                 '',
