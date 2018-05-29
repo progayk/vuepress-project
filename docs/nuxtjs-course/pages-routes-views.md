@@ -1,6 +1,6 @@
 ---
 title: 'Pages, Routes, Views'
-sidebarDepth: 3
+sidebarDepth: 2
 ---
 
 # Pages, Routes, Views'

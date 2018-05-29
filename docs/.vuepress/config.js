@@ -84,6 +84,10 @@ module.exports = {
                     {
                         text: 'Vue Components',
                         link: '/vuejs2_course/vue-components'
+                    },
+                    {
+                        text: 'Communicating Between Components',
+                        link: '/vuejs2_course/communicating-between-components'
                     }
                 ]
             },
@@ -162,6 +166,10 @@ module.exports = {
                     {
                         text: 'Pages, Routes, Views',
                         link: '/nuxtjs-course/pages-routes-views'
+                    },
+                    {
+                        text: 'Project 1: simple blog',
+                        link: '/nuxtjs-course/project-1-pages-routes-views'
                     }
                 ]
             }
@@ -188,7 +196,8 @@ module.exports = {
                 'project-monster-slayer',
                 'vue-instance',
                 'dev-workflow-vuecli-webpack',
-                'vue-components'
+                'vue-components',
+                'communicating-between-components'
             ],
             '/info/': [
                 ''
@@ -196,7 +205,8 @@ module.exports = {
             '/nuxtjs-course/': [
                 '',
                 'nuxtjs-getting-started',
-                'pages-routes-views'
+                'pages-routes-views',
+                'project-1-pages-routes-views'
             ],
             '/chain-project/': [
                 '',
