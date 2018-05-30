@@ -367,3 +367,260 @@ it's important to keep this in mind the difference between reference types and p
 :::
 
 ## Understanding Unidirectional Data Flow 
+
+The data can pass *parent* to *child* or viceversa but can not pass from *child* to another *child*.
+
+![child to child](../images/component-communication-1.png)
+
+But we can get the data that passed to *parent* like so:
+
+![child to child com](../images/component-communication-2.png)
+
+
+## Communicating with Callback Functions
+
+Here I will introduce an alternative to *custom events*.
+
+The callback method which we see on the above images is another option to pass data.
+
+* I will create a callback method called `resetName`. 
+
+* I will add another `prop` to the `<app-user-detail>` component called `resetFn="resetName"`.
+
+**src/components/User.vue**
+
+```html
+<template>
+...
+<app-user-detail
+    :name="username"
+    @nameWasReset="username = $event"
+    :resetFn="resetName"
+></app-user-detail>
+...  
+</template>
+
+<script>
+...
+    methods: {
+        changeName () {
+            this.username = 'Anne'
+        },
+        resetName() {
+            this.name = 'Mayk'
+        }
+    },
+...
+</script>
+```
+
+* Then go to `UserDetail.vue` file and create a new props `resetFn` and make its value `Function`.
+* Create a button and put this function into a `click` event listener.
+
+**src/components/UserDetail.vue**
+
+```html
+<template>
+    ...
+        <button @click="resetName">Reset Name</button>
+        <button @click="resetFn()">Reset Name Fn</button>
+    ...
+</template>
+
+<script>
+export default {
+    props: {
+        name: {
+            type: String,
+            default: 'Maykican'
+        },
+        resetFn: Function
+    },
+    ...
+}
+</script>
+```
+
+So that's one addition on how to communicate between parent and child. 
+You can do it with props and custom event or with props and passing a callback as a prop which actually executes a method in the parent. 
+But now by passing it as a prop makes it executable from the child.
+ 
+
+ ## Communication between Sibling Components
+
+ There is three different ways to do so.
+
+ ### Method 1: Custom Events
+
+ We can pass it by using `$emit` and custom events.
+
+ * I go to `UserEdit.vue` file and create a `<button>` to edit the user's age. I also add a method called `
+
+ **UserEdit.vue**
+
+```html
+<template>
+    <div class="component">
+        <h3>You may edit the User here</h3>
+        <p>Edit me!</p>
+        <p>User Age: {{ userAge }}</p>
+        <button @click="editAge">Edit Age</button>
+    </div>
+</template>
+
+<script>
+export default {
+    props: ['userAge'],
+    methods: {
+        editAge () {
+            this.userAge = 30
+            this.$emit('ageWasEdited', this.userAge)
+        }
+    }
+}
+</script>
+```
+ 
+ **User.vue**
+
+```html
+...
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <app-user-detail
+            :name="username"
+            @nameWasReset="username = $event"
+            :resetFn="resetName"
+            :userAge="age"
+            ></app-user-detail>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <app-user-edit
+        :userAge="age"
+        @ageWasEdited="age = $event"
+        ></app-user-edit>
+    </div>
+</div>
+...
+
+<script>
+...
+    export default {
+        data: function() {
+            return {
+                username: 'Mayk',
+                age: 27
+...
+</script>
+```
+
+ **UserDetail.vue**
+
+```html
+<template>
+...
+        <p>User age: {{ userAge }}</p>
+        <button @click="resetName">Reset Name</button>
+        <button @click="resetFn()">Reset Name Fn</button>
+    </div>
+</template>
+
+<script>
+...
+        resetFn: {
+            type: Function
+        },
+        userAge: Number
+...
+</script>
+```
+
+### Method 2: Callback Function
+
+The second approach can be **callback function** as we used in `resetFn`. I won't show it here since it's the identical to what we did just above.
+
+
+### Method 3: Event Bus
+
+I will create a new **Vue instance** in **main.js** file called `eventBus`.
+
+**main.js**
+
+```javascript
+import Vue from 'vue'
+import App from './App.vue'
+
+export const eventBus = new Vue();
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
+})
+```
+
+::: tip Important
+We have to put the new Vue instance above the main one. Because the main instance is one that holds all our components. therefore, we have to treat our `eventBus` before loading all these components.
+:::
+
+I won't create any special method inside this instance, because the Vue instance already comes with some default methods that I want to use. 
+
+* Then I go to `UserEdit.vue` file and import that instance. Here, I will use ES6 syntax to import named exports.
+
+ **UserEdit.vue**
+
+```html
+<script>
+import { eventBus } from '../main';
+export default {
+    props: ['userAge'],
+    methods: {
+        editAge () {
+            this.userAge = 30
+            eventBus.$emit('ageWasEdited', this.userAge)
+        }
+    }
+}
+</script>
+```
+
+* Go to `UserDetail.vue` file and add a new life-cycle hook: the `created` hook. Again, I will use ES6 syntax. I will use this hook to set up a listener to this event. This listener should keep running from the beggining this component. I use `created` because now this instance is created and register this listener.
+
+* We will import `eventBus` in this file, too. With `$on` we will listen the data and this data is always used and the second argument here which is always a callback which should get executed when every such event occurs. I'm using iOS 6 and text with the arrow function here and this callback which will get executed automatically by Vuejs always gets the data we pass with the event passed as an argument. So we allways get the *data* here. The name is up to you.
+
+ **UserDetail.vue**
+
+```html
+<script>
+import { eventBus } from '../main';
+export default {
+...
+    created() {
+        eventBus.$on('ageWasEdited', (age) => {
+            this.userAge = age;
+        })
+    }
+}
+</script>
+```
+
+Now, we pass the data not over the `User.vue` component by newly created `eventBus` Vue instance. This is how you can pass the data without routing it from the parent component. However, this method also can get messy and crowded as the application gets more complicated. As always, Vuejs has a better solution for this type of state manaegemnt called **Vuex**. For small to medium size applications there is nothing wrong to use above three methods.
+
+## Centralizing Code in an Event Bus
+
+It's also possible to add `methods` or other properties to `eventBus` instance.
+
+* Put the `changeAge` method into `eventBus`.
+
+**main.js**
+
+```javascript
+export const eventBus = new Vue({
+  methods: {
+    changeAge(age) {
+      this.$emit('ageWasEdited', age);
+    }
+  }
+});
+```
+
+## Assignment 7: Time to Practice - Component Communication

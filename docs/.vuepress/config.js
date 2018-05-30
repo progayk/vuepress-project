@@ -1,6 +1,7 @@
 module.exports = {
     title: 'My Documentations',
     description: 'A library with project documents',
+    serviceWorker: true,
     themeConfig: {
         search: true,
         searchMaxSuggestions: 10,

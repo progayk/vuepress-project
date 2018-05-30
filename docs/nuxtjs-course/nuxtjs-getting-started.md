@@ -77,3 +77,61 @@ For example, when you create a new file `users.vue` into `pages/` folder, this w
 
 ![course outline](../images/course-outline.png)
 
+
+
+## Adding and COnfiguring Buefy
+
+After running `create-nuxt-app project_folder` command we select `Buefy` as a front-end framework. Then we are ready to use `Buefy` and `Bulma` in our project.
+
+### Customization
+
+To be able to customize bulma we need to install some dependencies:
+
+```bash
+install bulma font-awesome --save
+npm install sass-loader node-sass --save-dev
+```
+
+1. Create `main.scss` in the `assets` folder under `styles` folder and add the customize code from Bulma:
+
+```
+assets
+├── buefy.png
+├── README.md
+└── styles
+    └── main.scss
+```
+
+```scss
+// File: assets/main.scss
+
+// 1. Import the initial variables
+@import "~bulma/sass/utilities/initial-variables";
+
+// 2. Set your own initial variables
+$listiyo-red: #FF6E60;
+
+// 3. Set the derived variables
+$primary: $listiyo-red;
+
+
+// 4. Import the rest of Bulma
+@import "~bulma/bulma";
+```
+
+2. Update the css block in nuxt.config.js to match the example below:
+
+```javascript
+// File: nuxt.config.js
+
+module.exports = {
+  /*
+  ** Global CSS
+  */
+  css: [
+    // node.js module but we specify the pre-processor
+    { src: '~assets/styles/main.scss', lang: 'scss' },
+    // { src: '~bulma/bulma.sass', lang: 'sass' },
+    { src: 'font-awesome/scss/font-awesome.scss', lang: 'scss' },
+  ],
+```
