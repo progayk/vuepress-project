@@ -27,6 +27,30 @@ This is only for local git repo, if you want to delete from remote repo also, yo
 deal with conflictions. For now, I don't know how to do it.
 :::
 
+## Git remove uncommited
+
+This will unstage all files you might have staged with git add:
+```bash
+git reset
+```
+This will revert all local uncommitted changes (should be executed in repo root):
+```bash
+git checkout .
+```
+You can also revert uncommitted changes only to particular file or directory:
+```bash
+git checkout [some_dir|file.txt]
+```
+Yet another way to revert all uncommitted changes (longer to type, but works from any subdirectory):
+```bash
+git reset --hard HEAD
+```
+This will remove all local untracked files, so only git tracked files remain:
+```bash
+git clean -fdx
+```
+WARNING: -x will also remove all ignored files!
+
 ## Transfer files to repo on server
 
 * Create app repo

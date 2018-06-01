@@ -746,3 +746,11 @@ By default, fenced code blocks are automatically wrapped with `v-pre`. If you wa
 ### vue-awesome-swiper library
 
 You can see the demo page on [this link](https://surmon-china.github.io/vue-awesome-swiper/).
+
+## Using components on vuepress
+
+<br>
+
+<sampleContainer>
+let mayk = 'Strng';
+</sampleContainer>

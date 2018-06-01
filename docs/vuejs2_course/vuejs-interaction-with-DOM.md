@@ -494,6 +494,12 @@ Here is the [link](https://jsfiddle.net/maykjony/5f2uvfdt/7/) to the example.
 
 About reactivity, we only have seen rather simple examples. We click to a button and change a text depending on the data property binded to it. When we want to change lots of property or to change the value in lots of different places, the below example can quickly go become `spaghetti`.
 
+> Below example is rather complicated, so I added this [jsbin example](http://jsbin.com/nagolib/edit?html,js,output).
+
+> And [On this link](http://jsbin.com/bejones/edit?html,js,output) you can see the second example related to `computed` properties.
+
+
+
 ```html
 <div id="app">
   <button v-on:click="increase">Click Me!</button>
@@ -618,7 +624,7 @@ When working on dependencies VueJs have another way of doing this: `watch` prope
 **computed:** Dependent Properties<br>
 **watch:** Execute code upon data changes
 
-`watch` property allows me to do something after a data changes. VueJs automatically pass the value of the data. If you need a **synchronous** thing to run use `watch` property.
+`watch` property allows me to do something after a data changes. VueJs automatically pass the value of the data. If you need a **asynchronous** thing to run use `watch` property.
 
 In the below example it will react to a change in data 2 seconds later. Since I will use a **callback** closure `setTimeout` I need to store my Vue instance in a variable. Then I will use it in the callback closure.
 

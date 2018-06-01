@@ -38,7 +38,7 @@ Add cdn link into `head` in your html file.
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 ```
 
-In the javascript file, create a Vue instance. This instance will control its own template which will be rendered on the html and displayed on the screen. In order to Vue to do this we need pass some arguments to this constructer function. There is one important property that Vue.js will recognize: the `el` property. It takes *String* as a value and with this String we set up which part of out html code should be under control of this Vue instance.
+In the javascript file, create a Vue instance. This instance will control its own template which will be rendered on the html and displayed on the screen. In order to Vue to do this we need pass some arguments to this constructor function. There is one important property that Vue.js will recognize: the `el` property. It takes *String* as a value and with this String we set up which part of out html code should be under control of this Vue instance.
 
 ```javascript
 new Vue({

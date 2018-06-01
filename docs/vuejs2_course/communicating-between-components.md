@@ -623,4 +623,61 @@ export const eventBus = new Vue({
 });
 ```
 
+**UserEdit.vue**
+
+```html
+<script>
+import { eventBus } from '../main';
+export default {
+    props: ['userAge'],
+    methods: {
+        editAge () {
+            this.userAge = 30
+            // this.$emit('ageWasEdited', this.userAge)
+            // eventBus.$emit('ageWasEdited', this.userAge)
+            eventBus.changeAge(this.userAge);
+        }
+    }
+}
+</script>
+```
+
+* listen the changes from anohter component.
+
+**UserDetail.vue**
+
+```html
+
+<script>
+import { eventBus } from '../main';
+export default {
+    props: {
+        name: {
+            type: String,
+            default: 'Maykican'
+        },
+        resetFn: {
+            type: Function
+        },
+        userAge: Number
+    },
+    methods: {
+        switchName() {
+            return this.name.split('').reverse('').join('')
+        },
+        resetName() {
+            this.name = 'Mayk'
+            this.$emit('nameWasReset', this.name)
+        }
+    },
+    created() {
+        eventBus.$on('ageWasEdited', (age) => {
+            this.userAge = age;
+        })
+    }
+}
+</script>
+
+```
+
 ## Assignment 7: Time to Practice - Component Communication

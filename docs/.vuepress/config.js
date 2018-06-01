@@ -100,8 +100,16 @@ module.exports = {
                         link: '/chain-project/day-1'
                     },
                     {
+                        text: 'Day 2',
+                        link: '/chain-project/day-2'
+                    },
+                    {
                         text: "List Clinics",
                         link: '/chain-project/list-companies-firebase-vue'
+                    },
+                    {
+                        text: "Vue Storyblok",
+                        link: '/chain-project/storyblok-blog'
                     }
                 ]
             },
