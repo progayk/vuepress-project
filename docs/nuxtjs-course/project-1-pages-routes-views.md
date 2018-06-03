@@ -7,6 +7,8 @@ sidebarDepth: 3
 
 ## Credits
 
+The associated files can be found under `~/Documents/courses/nuxtjs-udemy/blog-project-simple/`.
+
 ## Content
 
 [[toc]]
@@ -395,6 +397,7 @@ Our blog is getting a better look:
 
 Now, I will add `Header` components under `components/Navigation` folder.
 
+
 **components/Navigation/TheHeader.vue**
 
 ```html
@@ -494,6 +497,8 @@ export default {
 }
 </style>
 ```
+
+### SideNav toggle
 
 **components/Navigation/TheSidenav.vue**
 
@@ -629,4 +634,151 @@ export default {
   background-color: white;
 }
 </style>
+```
+
+## Vue router vs. Nuxt router
+
+Nuxt router uses vue router behind the scenes. So, you can read the [vue-router docs](https://router.vuejs.org/) to get more information.
+
+## Workink on the Post Page
+
+I want to list the existing posts on the `Blog` section of my site. Since I use the same thing in my landing page:
+
+* Create a Vue component called `PostList` and import it to both `pages/index.vue` and `pages/posts/index.vue` file.
+
+**components/Posts/PostList.vue**
+
+```html
+<template>
+  <section class="post-list">
+    <post-preview
+      id="1"
+      thumbnail="http://tapety.joe.pl/tapeta/abstrakcja/niebieskie/niebieskie-swietliste-kregi.jpg"
+      title="hello there!"
+      previewText="THis is my first post" />
+  </section>
+</template>
+
+<script>
+  import PostPreview from '@/components/Posts/PostPreview'
+  export default {
+    components: {
+      PostPreview
+    }
+  }
+</script>
+
+<style scoped>
+  .post-list {
+    display: flex;
+    padding: 20px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+```
+
+* import and use the component in landing page.
+
+**pages/index.vue**
+
+```html
+<template>
+  <div class="home-page">
+    <section class="intro">
+      <h1>Get the latest tech news</h1>
+    </section>
+    <PostList />
+  </div>
+</template>
+
+<script>
+import PostPreview from '@/components/Posts/PostPreview'
+import PostList from "../components/Posts/PostList";
+export default {
+  components: {
+    PostList,
+    PostPreview
+  }
+}
+</script>
+```
+
+## Creating Admin Section
+
+Under the `pages/admin/` folder I will create the pages for the admin section. 
+
+* Create a landing page for admin.
+* Create a `auth` page for authentication and for creating new admins.
+* Create a `post` page called `_postId` which will be rendered dynamically and in which we will view and edit the posts.
+* Create a `new-post` page in which we will create new posts.
+
+```
+pages/admin
+├── auth
+│   └── index.vue
+├── index.vue
+├── new-post
+│   └── index.vue
+└── _postId
+    └── index.vue
+
+```
+
+### Admin Landing Page
+
+* Set up `pages/admin/index.vue` file.
+
+**pages/admin/index.vue**
+
+```html
+<template>
+  <div class="admin-page">
+    <section class="new-post">
+      <button>Create Post</button>
+    </section>
+    <section class="existing-posts">
+      <h2>Posts Lists</h2>
+      <PostList />
+    </section>
+  </div>
+</template>
+
+<script>
+    import PostList from "../../components/Posts/PostList";
+    export default {
+      components: {PostList}
+    }
+</script>
+
+<style scoped>
+  .admin-page {
+    padding: 20px;
+  }
+
+  .new-post {
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+  }
+
+  .existing-posts {
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
+```
+
+### Admin New Post Page
+
+**pages/admin/new-post/index.vue**
+
+* to continue from where you left off click [this link](https://www.udemy.com/nuxtjs-vuejs-on-steroids/learn/v4/t/lecture/9173208?start=0).
+
+```html
+
 ```

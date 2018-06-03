@@ -681,3 +681,6 @@ export default {
 ```
 
 ## Assignment 7: Time to Practice - Component Communication
+
+You can find the finished assignment in `/home/jony/Documents/courses/vuejs-udemy/vue-components/assingmnt7/assgnnt-7/server-status-assignment-7`.
+

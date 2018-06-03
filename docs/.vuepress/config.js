@@ -89,6 +89,14 @@ module.exports = {
                     {
                         text: 'Communicating Between Components',
                         link: '/vuejs2_course/communicating-between-components'
+                    },
+                    {
+                        text: "Advanced component usage",
+                        link: '/vuejs2_course/advanced-component-usage'
+                    },
+                    {
+                        text: "state management with vuex",
+                        link: '/vuejs2_course/state-management-with-vuex'
                     }
                 ]
             },
@@ -110,6 +118,10 @@ module.exports = {
                     {
                         text: "Vue Storyblok",
                         link: '/chain-project/storyblok-blog'
+                    },
+                    {
+                        text: "Kapellum Project",
+                        link: '/chain-project/kapellum'
                     }
                 ]
             },
@@ -206,7 +218,9 @@ module.exports = {
                 'vue-instance',
                 'dev-workflow-vuecli-webpack',
                 'vue-components',
-                'communicating-between-components'
+                'communicating-between-components',
+                'advanced-component-usage',
+                'state-management-with-vuex'
             ],
             '/info/': [
                 ''
@@ -220,6 +234,8 @@ module.exports = {
             '/chain-project/': [
                 '',
                 'day-1',
+                'day-2',
+                'kapellum',
                 'list-companies-firebase-vue'
             ],
             '/express-framework/': [
