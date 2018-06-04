@@ -268,3 +268,330 @@ Let's we are not sure if a third element will be passed.
 
 ## Switching Multiple Components to Dynamic Components
 
+Let's say we have multiple components in our project. 
+
+* Create extra components `Author.vue` and `New.vue` then put some dummy content in them
+
+**Author.vue**
+
+```html
+<template>
+  <div>
+    <h3>The Author</h3>
+  </div>
+</template>
+```
+
+**New.vue**
+
+```html
+<template>
+  <div>
+    <h3>New Quote</h3>
+  </div>
+</template>
+```
+
+* import and register the components to `App.vue` component.
+
+
+**App.vue**
+
+```html
+<script>
+  import Quote from "./components/Quote";
+  import Author from "./components/Author";
+  import New from "./components/New";
+export default {
+  components: {
+    'app-quote': Quote,
+    'app-author': Author,
+    'app-new': New
+  }
+}
+</script>
+```
+
+Don't put the components into your template. We want to display them depending on which button is pressed.
+
+* Add three buttons above `app-quote` component.
+* Add a new `data` property `selectedComponent`.
+
+**App.vue**
+
+```html
+<template>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <button @click="selectedComponent = 'app-quote'">Quote</button>
+        <button @click="selectedComponent = 'app-author'">Author</button>
+        <button @click="selectedComponent = 'app-new'">New Quote</button>
+        <hr>
+        <p>{{ selectedComponent }}</p>
+        <app-quote>
+          <h2 slot="title">{{ quoteTitle}}</h2>
+          <p slot="content">A wonderful quote!</p>
+        </app-quote>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import Quote from "./components/Quote";
+  import Author from "./components/Author";
+  import New from "./components/New";
+export default {
+  data() {
+    return {
+      quoteTitle: 'The Quote',
+      selectedComponent: 'app-quote'
+    }
+  },
+  components: {
+    'app-quote': Quote,
+    'app-author': Author,
+    'app-new': New
+  }
+}
+</script>
+```
+
+Now, we have this set up. When we hit the button `selectedComponent`' value changes.
+
+<div>
+    <video width="100%" height="100%" controls>
+        <source src="../videos/advanced-components-2.webm" type="video/webm">
+    Your browser does not support the video tag.
+    </video>
+</div>
+
+We want that when a button is pressed the related component changes dynamically. In order to have such a behaviour we use `<component>` element. This selector is a *reserved* word just like `slot`. We can bind `<commponent>` to a property which holds the `component` which should get loaded. To bind it we use `:is` attribute then we will bind it to `selectedComponent` property.
+
+
+**App.vue**
+
+```html{10,11,12}
+<template>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <button @click="selectedComponent = 'app-quote'">Quote</button>
+        <button @click="selectedComponent = 'app-author'">Author</button>
+        <button @click="selectedComponent = 'app-new'">New Quote</button>
+        <hr>
+        <p>{{ selectedComponent }}</p>
+        <component :is="selectedComponent">
+          <p>Default component</p>
+        </component>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import Quote from "./components/Quote";
+  import Author from "./components/Author";
+  import New from "./components/New";
+export default {
+  data() {
+    return {
+      quoteTitle: 'The Quote',
+      selectedComponent: 'app-quote'
+    }
+  },
+  components: {
+    'app-quote': Quote,
+    'app-author': Author,
+    'app-new': New
+  }
+}
+</script>
+```
+
+<div>
+    <video width="100%" height="100%" controls>
+        <source src="../videos/advanced-components-4.webm" type="video/webm">
+    Your browser does not support the video tag.
+    </video>
+</div>
+
+### Understanding Dynamic Component Behavior
+
+One important question when using this `Dynamic Component` approach is the component re-created or we use existing component?
+
+Let's find out!
+
+* Create a new button in `New.vue` component and create a new `data` property `counter` and set its initial value to 0. When the button is pressed the `counter`s value will increment.
+
+**New.vue**
+
+```html
+<template>
+  <div>
+    <h3>New Quote</h3>
+    <p>count is : {{ counter }}</p>
+    <button @click="counter++">increment</button>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        counter: 0
+      }
+    }
+  }
+</script>
+```
+
+Let's observe the behavior of this component. We want to find out whether the component's state is kept or not. 
+
+<div>
+    <video width="100%" height="100%" controls>
+        <source src="../videos/advanced-components-5.webm" type="video/webm">
+    Your browser does not support the video tag.
+    </video>
+</div>
+
+As we see in the above video the component's state is not kept. So the component is actually destroyed and re-created. We can check this behavior with `life-cycle hooks`. 
+
+* Add `destroyed` property and log the action.
+
+
+
+**New.vue**
+
+```html
+<script>
+  export default {
+    data() {
+      return {
+        counter: 0
+      }
+    },
+    destroyed() {
+      console.log('destroyed')
+    }
+  }
+</script>
+```
+
+![advanced-components-6](../videos/advanced-components-7.gif)
+
+
+> How we can keep this component alive?? Well, we can overwrite this behavior.
+
+## Keeping Dynamic Components Alive
+
+In order to make sure that the components are not destroyed we can wrap the component in `<keep-alive>` component. Within this component we can wrap the component of which the state we want to be kept alive.
+
+**App.vue**
+
+```html
+<keep-alive>
+  <component :is="selectedComponent">
+    <p>Default component</p>
+  </component>
+</keep-alive>
+```
+
+![advanced-components-6](../videos/advanced-components-6.gif)
+
+## Dynamic Component Life-cycle Hooks
+
+We have two life-cycle to control if a dynamic component is currently visited or we navigated away, so it is deactivated. These life-cycle hooks are called `activated` and `deactivated`.
+
+
+**New.vue**
+
+```html
+<script>
+  export default {
+    data() {
+      return {
+        counter: 0
+      }
+    },
+    destroyed() {
+      console.log('destroyed')
+    },
+    deactivated() {
+      console.log('deactivated')
+    },
+    activated() {
+      console.log('activated')
+    }
+  }
+</script>
+```
+
+![advanced-components-6](../videos/advanced-components-8.gif)
+
+
+## Assignment-8: Slots And Dynamic Components
+
+![assignment-8-init](../images/assignment-8-init.png)
+
+* Create slot within the colored components. 
+
+**App.vue**
+
+```html
+<app-blue>
+  <h2>fuck the fucking fuckers!</h2>
+</app-blue>
+```
+
+**Red.vue**
+
+```html
+<template>
+    <div>
+      <slot></slot>
+    </div>
+</template>
+```
+
+![assignment-8-init](../images/assignment-8-part1.png)
+
+* Dynamically switch the components.
+
+**App.vue**
+
+```html
+<template>
+
+        <button class="btn btn-primary" @click="selectedComponent = 'appBlue'">Load Blue Template</button>
+        <button class="btn btn-success" @click="selectedComponent = 'appGreen'">Load Green Template</button>
+        <button class="btn btn-danger" @click="selectedComponent = 'appRed'">Load Red Template</button>
+        <hr>
+        <component :is="selectedComponent">
+          <h2>fuck the fucking fuckers!</h2>
+        </component>
+
+</template>
+
+<script>
+  //omitted
+  export default {
+    data() {
+      return {
+        selectedComponent: 'appBlue'
+      }
+    },
+    // omitted
+  }
+</script>
+```
+
+![advanced-components-6](../videos/assignment-8-part2.gif)
+
+
+**Helpful Links:**
+
+Official Docs - Slots: [http://vuejs.org/guide/components.html#Content-Distribution-with-Slots](http://vuejs.org/guide/components.html#Content-Distribution-with-Slots)
+Official Docs - Dynamic Components: [http://vuejs.org/guide/components.html#Dynamic-Components](http://vuejs.org/guide/components.html#Dynamic-Components)
+Official Docs - Misc: [http://vuejs.org/guide/components.html#Misc](http://vuejs.org/guide/components.html#Misc)

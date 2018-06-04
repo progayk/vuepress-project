@@ -79,7 +79,7 @@ module.exports = {
                         link: '/vuejs2_course/vue-instance'
                     },
                     {
-                        text: 'Dev Workflow (vue-cli, webpack)',
+                        text: 'DevWorkflow vue-cli,webpack',
                         link: '/vuejs2_course/dev-workflow-vuecli-webpack'
                     },
                     {
@@ -87,7 +87,7 @@ module.exports = {
                         link: '/vuejs2_course/vue-components'
                     },
                     {
-                        text: 'Communicating Between Components',
+                        text: 'Component Communication',
                         link: '/vuejs2_course/communicating-between-components'
                     },
                     {
@@ -95,7 +95,11 @@ module.exports = {
                         link: '/vuejs2_course/advanced-component-usage'
                     },
                     {
-                        text: "state management with vuex",
+                        text: "User Input with Forms",
+                        link: '/vuejs2_course/handling-user-input-with-forms'
+                    },
+                    {
+                        text: "state management - vuex",
                         link: '/vuejs2_course/state-management-with-vuex'
                     }
                 ]
@@ -220,6 +224,7 @@ module.exports = {
                 'vue-components',
                 'communicating-between-components',
                 'advanced-component-usage',
+                'handling-user-input-with-forms',
                 'state-management-with-vuex'
             ],
             '/info/': [

@@ -775,10 +775,11 @@ pages/admin
 
 ### Admin New Post Page
 
+* Add a input form. Like we always do in Vue.js apps we won't use `submit` action with forms. We will handle this programatically, in the end the *request* will be captured and then we can send it behind the scenes.
+
+I want to use some custom form elements so I will create a new folder with these components.
+I named the folder `UI` since it will contain UI elements. 
+
 **pages/admin/new-post/index.vue**
 
-* to continue from where you left off click [this link](https://www.udemy.com/nuxtjs-vuejs-on-steroids/learn/v4/t/lecture/9173208?start=0).
-
-```html
-
-```
+> Before continue this tutorial first finish the course about `Forms` in Vuejs2 course.

@@ -24,3 +24,8 @@ Is frontend javascript framework.
 * Build UI Widgets or complete Single-Page-Applications (SPAs)
 
 It's also very light-weight
+
+
+## Navigation and Page state management
+
+When you navigate from one page to another DOM is rendered every time and the previous state is gone. In order to keep the state read [this article](https://vuejsdevelopers.com/2017/04/16/vue-js-browser-button-ux/).

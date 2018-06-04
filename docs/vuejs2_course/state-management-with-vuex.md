@@ -5,10 +5,15 @@ sidebarDepth: 3
 
 # State Manegement Vuex
 
+[Vuex official page](https://vuex.vuejs.org/)
+
+![vuex schema](https://vuex.vuejs.org/vuex.png)
 
 ## Credits
 
 This course in on [this link](https://www.udemy.com/vuejs-2-the-complete-guide/learn/v4/t/lecture/5975154?start=0) on udemy.
+
+Here is a medium article about Vuex on [this link](https://medium.com/js-dojo/vuex-for-the-clueless-the-missing-primer-on-vues-application-data-store-33fa51ffc3af)
 
 ## Content
 
@@ -16,7 +21,7 @@ This course in on [this link](https://www.udemy.com/vuejs-2-the-complete-guide/l
 
 ## Why a different State Management may be needed
 
-We've seen how we can manage the state management by using props and callback functions when passing them from parent to child and child to parent.
+We've seen how we can manage the state management by using props and callback functions when passing data from parent to child and child to parent.
 
 ![state management 1](../images/state-management-1.png)
 
@@ -24,13 +29,13 @@ We can use `event bus` to enable the communication between components. It's bett
 
 ![state management 2](../images/state-management-2.png)
 
-One bus could quicly become crowded with `$emit`s and `$on`s. In the end, there will be a lot of code in this instance. Maybe, it's not the best solution... It's also gives us another problem: changes are hard to crack. Since we will be reaching that instance from all over the project it will be hard to understand which event is listened and changed from which part of the application. Though, it's a very good tool that we can use in medium sized applications. But for the large applications it might not be the best tool.
+One bus could quickly become crowded with `$emit`s and `$on`s. In the end, there will be a lot of code in this instance. Maybe, it's not the best solution... It's also gives us another problem: changes are hard to crack. Since we will be reaching that instance from all over the project it will be hard to understand which event is listened and changed by which component of the application. Though, it's a very good tool that we can use in medium sized applications. But for the large applications it might not be the best tool.
 
-Let's a have a look at **Vuex**. What is it? and, it offers us when a big project set up is needed.
+Let's a have a look at **Vuex**. What is it? and, what it offers us when a big project set up is needed.
 
 ## Understand the "Centralized State"
 
-It resembles to `Redux`. It's written by the Vue.js core team. Vuex has the idea of *Central Store* where the state is stored. We have one file to store the state of our application. It does not mean that some components can not have their own state. If it is not needed it is not needed to store the component state info.
+It resembles to `Redux`. It's written by the Vue.js core team. Vuex has the idea of *Central Store* where the state is stored. We have one file to store the state of our application. It does not mean that some components can not have their own state. If it is not needed you don't have to store the component state with Vuex.
 
 ![state management 3](../images/state-management-3.png)
 
@@ -58,7 +63,7 @@ Generally we name the folder as `store` in which we will keep the state of the a
 
 * Create it to the same directory where the components folder is.
 
-In this `store` folder create a file names `store.js`. In order to create such a store we need some helpers from the **Vuex package**. So, let's install it vie npm.
+In this `store` folder create a file named `store.js`. In order to create such a store we need some helpers from the **Vuex package**. So, let's install *Vuex* via npm.
 
 ```bash
 npm install --save vuex
@@ -81,7 +86,7 @@ Vue.use(Vuex);
 
 * Create a new Vuex Store 
 
-We can store all the state of the application in `state` property. It's a *reserved keyword*. Since, I will use this store outside of this file I will export it.
+We can store all the state of the application in `state` property. It's a *reserved keyword*. Since, I will use this `store` outside of this file I need to export it.
 
 **src/store/store.js**
 
@@ -107,7 +112,7 @@ import { store } from './store/store';
 
 new Vue({
   el: '#app',
-  state: state,  // or you can use only 'store' since it has the same name
+  store: store,  // or you can use only 'store' since it has the same name
   render: h => h(App)
 })
 ```
@@ -145,10 +150,10 @@ Go to `Counter.vue` file and instead of emitting the event with `$emit` use `$st
 
 
 ::: tip
-Methods that start with the dolar sign ($) are not the methods we created, they come from Vue.js. In this case from a third-party package Vuex.
+Methods that start with the dolar sign ($) are not the methods we created, they come from Vue.js. In this case from a third-party package `Vuex`.
 :::
 
-* Go to `Result.vue` and instead of using `props` use `computed` property. In it create function called `counter` and return the state of the counter.
+* Go to `Result.vue` and instead of using `props` use `computed` property, create function called `counter` and return the state of the counter.
 
 
 **src/components/Result.vue**
@@ -202,9 +207,11 @@ Whenever the `counter` in `store.js` file is changed, this `computed` property w
 </script>
 ```
 
-It works as it should be. Though it still have some issues. Next, you will see how to improve this solution.
+It works as it should do. Though, it still have some issues. Next, you will see how to improve this solution.
 
 ### Why a Centralized State Alone Won't Fix It
+
+When you want to do some calculation from more than one component, you will be repeating yourself. 
 
 * Add a new component named `AnotherResult.vue` and inside both this file and `Result.vue` times with 2 the `counter`s value.
 
@@ -290,7 +297,7 @@ Then access this `doubleCounter` function from a component.
   export default {
     computed: {
       counter() {
-        return this.$store.state.counter * 2;
+        return this.$store.state.counter;
       }
     }
   }
@@ -377,11 +384,28 @@ Vue.js has a helper that create all the `getters` in the `computed` property. Yo
 </script>
 ```
 
-### javascript spread operator
+### JavaScript spread operator
 
 Right now, you have this `mapGetters` in your `computed` property and if you want to create a custom method in this `computed` propetry you can't. Forutanely ES6 syntax provides a `spread operator` (...) and with that you can add custon methods in `computed` property.
 
-The `three dots` (...) tell allow use to tell javascript "please, pull out all the properties and methodlin the object you have here and create seperate key-value pairs for each of them. This will allow us to add all the computed properties which get treated automatically into into `computed` property and we can write our own `computed` properties.
+The `three dots` (...) tell allow use to tell javascript "please, pull out all the properties and methods in the object you have here and create seperate key-value pairs for each of them. This will allow us to add all the computed properties which get treated automatically into `computed` property and we can write our own `computed` properties.
+
+**src/components/AnotherResult.vue**
+
+```html
+<script>
+  import { mapGetters } from 'vuex';
+  export default {
+    computed: {
+      ...mapGetters([
+        'doubleCounter', 'clickCounter'
+      ]),
+      // ourOwnMethod() {};
+    }
+
+  }
+</script>
+```
 
 ::: tip
 We use babel to compile ES5 to ES6 code
