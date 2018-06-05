@@ -33,7 +33,7 @@ vue init webpack-simple folder_name
 
 * Create a new vue component for the quotes
 
-**src/components/Quote.vue**
+**components/Quote.vue**
 
 ```html
 <template>
@@ -111,7 +111,7 @@ I want to pass some text to the `Quote` component. I can do this by using `props
 
 * Add `quote` to `props` in `Quote` component.
 
-**src/components/Quote.vue**
+**components/Quote.vue**
 
 ```html
 <template>
@@ -133,7 +133,7 @@ Now, it works properly, but I want to pass HTML with it and with this approach i
 
 * I will pass an HTML block within `<app-quote>` component
 
-**src/components/Quote.vue**
+**components/Quote.vue**
 
 ```html
 <template>
@@ -162,7 +162,7 @@ It's important to understand where the code we pass in `<slot>` get compiled.
 
 For example, I want to change the styling. I can do it from `Quote.vue` file's `<style>` section like this: 
 
-**src/components/Quote.vue**
+**components/Quote.vue**
 
 ```html
 <style scoped>
@@ -178,7 +178,7 @@ We can pass HTML from parent to child by using `<slot>`. However, if we want to 
 
 * Give a name to slots by using *name* attribute.
 
-**src/components/Quote.vue**
+**components/Quote.vue**
 
 ```html
 <template>
@@ -209,7 +209,7 @@ We can pass HTML from parent to child by using `<slot>`. However, if we want to 
 
 Each slot that is not assigned by the `name` attr and referred by the `slot` attr will be treated as a default. For example, if I remove the `content` name and ref it wil still yield us the same result.
 
-**src/components/Quote.vue**
+**components/Quote.vue**
 
 ```html{8}
 <template>
@@ -225,7 +225,7 @@ Each slot that is not assigned by the `name` attr and referred by the `slot` att
 </template>
 ```
 
-**src/App.vue**
+**App.vue**
 
 ```html{3}
 <app-quote>
@@ -242,7 +242,7 @@ Let's we are not sure if a third element will be passed.
 
 * Add a `slot` with default content. This will be the default content and if an element passed to slot, it will be replaved with the upcoming content.
 
-**src/components/Quote.vue**
+**components/Quote.vue**
 
 ```html{6}
 <template>
