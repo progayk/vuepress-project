@@ -324,13 +324,12 @@ App.vue
 
 ## What v-model does and how to create a custom control
 
-Let's say you want to build your own `input`.
-
+Let's say you want to build your own `input`. We have to `$emit` the `input` event because the `v-model` will be waiting (listening) for it.
 
 * Create new component `Switch.vue`.
 
 <details>
-<summary>Swith.vue component</summary>
+<summary>Switch.vue component</summary>
 <br>
 
 ```html
@@ -338,26 +337,31 @@ Let's say you want to build your own `input`.
   <div>
     <div
       id="on"
-      :class="{active: isOn}"
-      @click="isOn = true"
+      :class="{active: value}"
+      @click="switched(true)"
     >On</div>
     <div 
       id="off"
-      @click="isOn = false"
-      :class="{active: !isOn}" 
+      @click="switched(false)"
+      :class="{active: !value}"
     >Off</div>
   </div>
 </template>
 
+
 <script>
 export default {
-  data() {
-    return {
-      isOn: true
-    };
+  props: ["value"],
+  methods: {
+    switched(isOn) {
+      // the event has to have the name 'input`
+      // because the `v-model` is waiting for it
+      this.$emit("input", isOn);
+    }
   }
 };
 </script>
+
 
 <style scoped>
 #on,
@@ -392,6 +396,379 @@ export default {
 
 ## Creating a custom control (input)
 
+* Create a two-way binding between the parent and the child.
 
 
+<details>
 
+<summary>AppSwitch.vue</summary>
+
+<br>
+
+```html
+<template>
+  <div class="toggle-container">
+  
+    <div id="on"
+      :class="{active: value}"
+      @click="switched(true)"
+    >
+      ON
+    </div>
+
+    <div id="off"
+      :class="{active: !value}"
+      @click="switched(false)"      
+    >
+    OFF</div>
+
+  </div>
+</template>
+
+
+<script>
+export default {
+  props: ["value"],
+  methods: {
+    switched(isOn) {
+      this.$emit("input", isOn);
+    }
+  }
+};
+</script>
+
+
+<style scoped>
+#on,
+#off {
+  height: 30px;
+  /* line-height:  */
+  /* to align the text inside the div or a button */
+  line-height: 30px;
+  width: 50px;
+  display: inline-block;
+  margin: 0;
+  padding: 4px;
+  background-color: lightgray;
+  text-align: center;
+  box-sizing: content-box;
+  cursor: pointer;
+}
+
+#on:hover,
+#on.active {
+  background-color: lightgreen;
+}
+
+#off:hover,
+#off.active {
+  background-color: red;
+}
+</style>
+```
+
+</details>
+
+
+<br>
+
+* you have to `$emit` the `input` event to the `v-model`. 
+
+<br>
+<details>
+
+<summary>MyApp.vue</summary>
+
+<br>
+
+
+```html
+<template>
+  <div>
+    <app-switch v-model="dataToggle"></app-switch>
+  </div>
+</template>
+
+
+<script>
+import AppSwitch from "./AppSwitch";
+export default {
+  components: {
+    AppSwitch
+  },
+  data() {
+    return {
+      name: "mayk",
+      dataToggle: true
+    };
+  }
+};
+</script>
+```
+
+</details>
+
+
+## Submitting a form
+
+Let's implement the `submit` action to the submit button. When the form is submitted we will show the `Your Data` panel.
+
+<details>
+
+<summary>App.vue</summary>
+
+<br>
+
+```html
+<button
+        class="btn btn-primary"
+        @click.prevent="submitted"
+        >Submit!
+        <!-- We don't want to submit the form with SUBMIT action
+        so that we use '.prevent' method. -->
+</button>
+...
+<div class="row" v-if="isSubmitted">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+              <h4>Your Data</h4>
+          </div>
+...
+<script>
+import Switch from "./Switch";
+export default {
+  data() {
+    return {
+      // omitted
+      isSubmitted: false
+    };
+  },
+  methods: {
+    submitted() {
+      this.isSubmitted = true;
+    }
+  },
+   // omitted
+};
+</script>
+
+```
+
+</details>
+<br>
+
+## Assignment-9: Forms
+
+* Create the form with `v-model` binding.
+
+<br>
+
+<details>
+
+<summary>App.vue</summary>
+<br>
+
+```html
+<template>
+  <div class="container">
+    <form>
+      <div class="row" v-if="!isSubmitted">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+          <!-- Exercise 1 -->
+          <!-- Create a Signup Form where you retrieve the following Information -->
+          <!-- Full Name (First Name + Last Name) -->
+          <!-- Mail -->
+          <!-- Password -->
+          <!-- Store Data? Yes/No -->
+
+          <nameForm v-model="fullName"/>
+
+          <div class="form-group">
+            <label for="email">email</label>
+            <input type="email"
+                   id="email"
+                   class="form-control"
+                   :class="{errorPlaceholder: hasError}"
+                   v-model.lazy.trim="userData.email"
+                   :placeholder="placeHolderValue"
+            >
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password"
+                   id="password"
+                   class="form-control"
+                   v-model.lazy.trim="userData.password"
+            >
+          </div>
+          <label for="yes">
+            <input
+              type="radio"
+              id="yes"
+              value="yes"
+              v-model="storeData"
+            >Yes
+          </label>
+          <label for="no">
+            <input
+              type="radio"
+              id="no"
+              value="no"
+              v-model="storeData"
+            >No
+          </label>
+          <br>
+
+          <button
+            class="btn btn-primary"
+            @click.prevent="submitted"
+          >Submit!
+            <!-- We don't want to submit the form with SUBMIT action
+            so that we use '.prevent' method. -->
+          </button>
+
+          <!-- Exercise 2 -->
+          <!-- Only display the Form if it has NOT been submitted -->
+          <!-- Display the Data Summary ONCE the Form HAS been submitted -->
+
+          <!-- Exercise 3 -->
+          <!-- Edit the Example from above and create a custom "Full Name" Control -->
+          <!-- which still holds the First Name and Last Name Input Field -->
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div class="row" v-if="isSubmitted">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4>Your Data</h4>
+          </div>
+          <div class="panel-body">
+            <p>Full Name: {{ fullName }}</p>
+            <p>Mail: {{ userData.email }}</p>
+            <p>Password: {{ userData.password }}</p>
+            <p>Store in Database?: {{ storeData }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import NameForm from './components/NameForm'
+  export default {
+    components: {
+      nameForm: NameForm
+    },
+    data() {
+      return {
+        fullName: "Mayk Jony",
+        userData: {
+          email: '',
+          password: ''
+        },
+        storeData: 'yes',
+        isSubmitted: false,
+        placeHolderValue: 'yourmail@',
+        hasError: false
+      }
+    },
+    methods: {
+      submitted() {
+        if (this.userData.email === '' || this.userData.password === '') {
+          this.hasError = true;
+          this.placeHolderValue = 'this area is required';
+          return
+        }
+        this.isSubmitted = true
+      }
+    }
+  }
+</script>
+```
+
+</details>
+
+<br>
+
+* Use `:value` to bind attribute. 
+
+`value` which is passed as `props` passed automatically by Vuejs when using `input` element.
+
+* Listen to change on input with `@input` 
+
+<details>
+
+<summary>NameForm.vue</summary>
+<br>
+
+```html
+<template>
+    <div class="form-container">
+      <div class="form-group">
+        <label for="firstName">First name</label>
+        <input type="text"
+               id="firstName"
+               class="form-control"
+               :value="firstName"
+               @input="nameChanged(true, $event)"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input type="text"
+               id="lastName"
+               class="form-control"
+               :value="lastName"
+               @input="nameChanged(false, $event)"
+
+        >
+      </div>
+    </div>
+</template>
+
+<script>
+    export default {
+      // When you enter 'value' as a prop, vuejs knows that it should
+      // get the value of the input
+      props: ['value'],
+      methods: {
+        nameChanged(isFirst, event) {
+          let name = '';
+          if (isFirst) {
+            name = event.target.value + ' ' + this.lastName
+          } else {
+            name = this.firstName + ' ' + event.target.value
+          }
+          // update the value of the property otherwise
+          // computed properties does not function correctly
+          this.value = name;
+          // You have to emit as 'input'
+          this.$emit('input', this.value)
+        }
+      },
+      computed: {
+        firstName() {
+          return this.value.split(" ")[0]
+        },
+        lastName() {
+          return this.value.split(" ")[1]
+        }
+      }
+
+    }
+</script>
+
+```
+
+</details>
+
+<br>
+
+**Useful Links:**
+
+Official Docs - Forms: [http://vuejs.org/guide/forms.html](http://vuejs.org/guide/forms.html)

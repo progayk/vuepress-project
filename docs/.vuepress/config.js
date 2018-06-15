@@ -99,6 +99,10 @@ module.exports = {
                         link: '/vuejs2_course/handling-user-input-with-forms'
                     },
                     {
+                        text: 'understanding direvtives',
+                        link: '/vuejs2_course/understanding-direvtives'
+                    },
+                    {
                         text: "state management - vuex",
                         link: '/vuejs2_course/state-management-with-vuex'
                     }
@@ -225,6 +229,7 @@ module.exports = {
                 'communicating-between-components',
                 'advanced-component-usage',
                 'handling-user-input-with-forms',
+                'understanding-direvtives',
                 'state-management-with-vuex'
             ],
             '/info/': [
