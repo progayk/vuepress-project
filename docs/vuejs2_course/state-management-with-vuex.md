@@ -77,7 +77,7 @@ Then we can tell Vue to use Vuex. It's neccesary to register this package to be 
 
 **src/store/store.js**
 
-```javacript
+```javascript
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -90,7 +90,7 @@ We can store all the state of the application in `state` property. It's a *reser
 
 **src/store/store.js**
 
-```
+```javascript
 export const store = new Vuex.Store({
   state: {
     counter: 0

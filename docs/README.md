@@ -3,7 +3,7 @@ home: true
 navbar: true
 next: ./guides/
 prev: false
-sidebarDepth: 2
+sidebarDepth: 3
 actionText: Get Started →
 actionLink: /guides/
 features:
