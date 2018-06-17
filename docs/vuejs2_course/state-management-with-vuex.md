@@ -492,15 +492,13 @@ It makes sense to use these functions from other components...
 
 * Create a new component called `AnotherCounter.vue`
 
-**AnotherCounter.vue**
-
 Paste the same code in `Counter.vue` file.
 
 * Import to `App.vue` and add it as a component.
 
 We, again repeating the code like we did in `getters` so let's use `mapMutations`. With mapping the mutations with the same name that we use in `@click` attrs will enable us to use them as it is.
 
-**Counter.vue**
+**AnotherCounter.vue**
 
 ```html
 <template>
@@ -543,3 +541,205 @@ Let's say when you hit a button you want to make a mutation after some asynchron
 
 Action methods get a function and the `context` is passed automatically to this function. Then this function gives you the access to `commit` function.
 
+ **store.js**
+
+ ```javascript
+ export const store = new Vuex.Store({
+  // omitted
+  actions: {
+    increment: ({ commit }) => {
+      commit('increment')
+    },
+    increment: ({ commit }) => {
+      commit('decrement')
+    },
+    asyncIncrement: ({ commit }) => {
+      setTimeout(() => {
+        commit('increment')
+      }, 3000)
+    },
+    asyncDecrement: ({ commit }) => {
+      setTimeout(() => {
+        commit('decrement')
+      }, 3000)
+    }
+  }
+})
+```
+
+**AnotherCounter.vue**
+
+```html
+<template>
+  <div>
+    <button class="btn btn-primary" @click="increment">Increment</button>
+    <button class="btn btn-primary" @click="decrement">Decrement</button>
+  </div>
+</template>
+
+<script>
+  import { mapActions } from 'vuex';
+  export default {
+    methods: {
+      ...mapActions([
+        'increment',
+        'decrement'
+      ])
+    }
+  }
+</script>
+```
+
+What `mapActions` does behind the scenes is :
+
+```javascript
+increment () {
+  this.$store.dispatch('increment)
+},
+increment () {
+  this.$store.dispatch('decrement')
+}
+```
+
+We can also pass arguments with functions :
+
+**AnotherCounter.vue**
+
+```html{3}
+<template>
+  <div>
+    <button class="btn btn-primary" @click="increment(100)">Increment</button>
+    <button class="btn btn-primary" @click="decrement">Decrement</button>
+  </div>
+</template>
+
+<script>
+  export default {
+    methods: {
+      // pass argument 
+      increment(by) {
+        // dispatch the 'increment' method with the `by` argument
+        this.$store.dispatch('increment', by)  
+      }
+    }
+  }
+</script>
+```
+
+Then get it as so called `payload`, you can name it whatever you like but it's a general way to name it "payload". Then we can pass it with `commit` method to `mutations`.
+
+ **store.js**
+
+ ```javascript{4,5,6,9,10,11}
+ export const store = new Vuex.Store({
+  // omitted
+  mutations: {
+    increment: (state, payload) => {
+      // get the 'payload' from 'actions'
+      state.counter += payload
+    }
+  }
+  actions: {
+    increment: ({ commit }, payload) => {
+      // Pass the payload to the 'mutations'
+      commit('increment', payload)  
+    },
+    // omitted
+  }
+})
+```
+
+Let's run an asyncrhonous task: 
+
+ **AnotherCounter.vue**
+
+ ```html
+<template>
+  <div>
+    <button class="btn btn-primary" @click="asyncIncrement(200)">Increment</button>
+    <button class="btn btn-primary" @click="asyncDecrement(50)">Decrement</button>
+  </div>
+</template>
+
+<script>
+  export default {
+    methods: {
+      // pass argument 
+      asyncIncrement(by) {
+        // dispatch the 'asyncIncrement' method with the `by` argument
+        this.$store.dispatch('asyncIncrement', by)  
+      }
+    }
+  }
+</script>
+```
+
+Let the `asyncIncrement` method to receive a `payload`
+
+ **store.js**
+
+ ```javascript
+ export const store = new Vuex.Store({
+  // omitted
+    asyncIncrement: ({ commit }, payload) => {
+      setTimeout(() => {
+        commit('increment', payload)
+      }, 3000)
+    },
+    asyncDecrement: ({ commit }, payload) => {
+      setTimeout(() => {
+        commit('decrement', payload)
+      }, 3000)
+    }
+  }
+})
+```
+
+Let's make some fancy stuff:
+
+* pass an object with `asyncIncrement` method, `by` and `duration`
+
+ **AnotherCounter.vue**
+
+ ```html
+<template>
+  <div>
+    <button class="btn btn-primary" @click="asyncIncrement({ by: 5, duration: 2000 })">Increment</button>
+    <button class="btn btn-primary" @click="asyncDecrement(50)">Decrement</button>
+  </div>
+</template>
+
+<script>
+  export default {
+    methods: {
+      // pass argument 
+      asyncIncrement(options) {
+        // dispatch the 'asyncIncrement' method with the `by` argument
+        this.$store.dispatch('asyncIncrement', options)  
+      }
+    }
+  }
+</script>
+```
+
+Let the `asyncIncrement` method to receive a `payload`
+
+ **store.js**
+
+ ```javascript
+ export const store = new Vuex.Store({
+  // omitted
+    asyncIncrement: ({ commit }, payload) => {
+      setTimeout(() => {
+        commit('increment', payload.by)
+      }, payload.duration)
+    },
+    asyncDecrement: ({ commit }, payload) => {
+      let by = payload.
+      setTimeout(() => {
+        commit('decrement', payload)
+      }, 3000)
+    }
+  }
+})
+```
