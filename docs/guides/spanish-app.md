@@ -29,3 +29,7 @@ Labirentimiz çok güzel, burada en ilkel ihtiyaçlarınızı giderebilirsiniz. 
 İspanyolca Merkezindeki insanların yemek ihtiyaçlarını karşılamak için haftalık bir düzen belirlenecek.
 Ekipte yer alan herkes, döngü bitene dek en az bir kere *günün yemeğini* yapmış olacak. Böylece hem insanlar
 yemek yapma becerisi kazanmış hem de bu kadar kşinin doyurulması mevzusu çözülmüş olacak.
+
+[![Edit Vue Template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/z2xz19ypkx)
+
+<iframe src="https://codesandbox.io/embed/z2xz19ypkx" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>

@@ -743,3 +743,6 @@ Let the `asyncIncrement` method to receive a `payload`
   }
 })
 ```
+
+## Two-Way-Binding (v-model) and Vuex
+
