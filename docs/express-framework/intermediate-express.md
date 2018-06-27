@@ -178,3 +178,66 @@ console.log(faker.fake("{{name.lastName}}, {{name.firstName}} {{name.suffix}}"))
 // outputs: "Marks, Dean Sr."
 ```
 
+## Styles and Partials
+
+* Show how to properly include public assets
+* Properly configure the app to use EJS
+* Use partials to dry up the code
+
+We will create a CSS file to make our application more appealing. Express framework offers a good way to serve static files.
+
+Create a new dir under the `src/` called `public` and inside this folder create a new file called `app.css`. We will add referance to this file into our HTML with `<link>` tag. Instead of pointing full file path we will only write file name. 
+
+```html
+<link rel="stylesheet" href="app.css">
+```
+
+Then we will go to `app.js` file and we tell the `express` to use `static` and we provide the folder name in which we put the static files.
+
+```javascript
+app.use(express.static('public'))
+```
+
+Also we repeat the code when we specifying the `.ejs` extensions. We can **set** the application to use `ejs` as a *view engine* so that we won't have to write extensions every time.
+
+```javascript
+app.set('view engine', 'ejs')
+
+app.get("/", function(req, res) {
+    res.render("home"); // here we don't need to write file extension
+});
+```
+
+### Partials
+
+Partials are good for not repeating ourselves. We will just refer them in every page so we won't need to write html tags or other tags that we use in every view like navbar and footer.
+
+In order to do that we create a new dir under `views/` and we call it `partials`. Inside that folder we create two files called `header.ejs` and `footer.ejs`. Then we will include these partials in our views files.
+
+```javascript
+<% include header %>
+
+<!-- some content -->
+
+<% include footer %>
+```
+
+It will only work on `home.js` file however if we can solve this problem by adding a `partials` to include section and then also by adding `/` slash like so:  
+
+```html
+href="/app.css"
+```
+
+```javascript
+<% include partials/header %>
+
+<!-- some content -->
+
+<% include partials/footer %>
+```
+
+## Post Requests
+
+* Write post routes, and test them with postman
+* Use a form to send a post request
+* Use body parser to get form data

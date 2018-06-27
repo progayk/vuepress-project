@@ -51,6 +51,7 @@ module.exports = {
                 'advanced-component-usage',
                 'handling-user-input-with-forms',
                 'understanding-direvtives',
+                'vuejs-animations-and-transitions',
                 'state-management-with-vuex'
             ],
             '/info/': [
