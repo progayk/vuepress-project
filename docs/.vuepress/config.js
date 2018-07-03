@@ -21,6 +21,8 @@ module.exports = {
                     { text: 'Kotlin', link: '/kotlin-course/' },
                     { text: 'VueJS 2 Course', link: '/vuejs2_course/' },
                     { text: 'NuxtJS', link: '/nuxtjs-course/' },
+                    { text: 'API', link: '/API/' },
+                    { text: 'Yelp Camp', link: '/yelp-camp-project/' }
                 ]   
             }
         ],
@@ -57,6 +59,10 @@ module.exports = {
             '/info/': [
                 ''
             ],
+            '/yelp-camp-project/': [
+                '',
+                'yelp-camp-basics'
+            ],
             '/nuxtjs-course/': [
                 '',
                 'nuxtjs-getting-started',
@@ -89,6 +95,10 @@ module.exports = {
                 '',
                 'cloud-firestore',
                 'ssr-vue-apps-with-nuxtjs'
+            ],
+            '/API/': [
+                '',
+                'intro-to-apis'
             ],
             '/': [
                 ''

@@ -241,3 +241,68 @@ href="/app.css"
 * Write post routes, and test them with postman
 * Use a form to send a post request
 * Use body parser to get form data
+
+Create a new folder and run `npm init` inside that folder.
+
+Then, install `express` and `ejs` libraries. 
+
+Create views for root `/` and for friends `/friends`
+
+Create a list with friends. And then pasds it with `render` function.
+
+```javascript
+app.get('/friends', (req, res) => {
+    let friends = ['Tony', 'Miranda', 'Justin', 'Lily']
+    res.render('friends', { friends })
+})
+```
+
+```javascript
+<% friends.forEach(function(friend) { %>
+    <li> I have a friend called <%= friend %></li>
+<% }) %>
+```
+
+Create a `post` function in `app.js`. When a request get it will resolve `/addFriend` path.
+
+```javascript
+app.post('/addFriend', (req, res) => {
+    res.send('you have reach the post route')
+})
+```
+
+And then create a `form` in `friends` file.
+
+### Get data from the form
+
+Add a `name` attribute inside the `<input>` element. This will be send with the body.
+
+To see the response we will log it on the console like
+
+```javascript
+app.post('/addFriend', (req, res) => {
+    console.log(req.body)
+    res.send('you have reach the post route')
+})
+```
+
+But this will return an `undefined` because express doesn't how to handle it. We need to install a library called `body-parser` in order to parse the body.
+
+```bash
+npm i body-parser --save
+```
+
+```javascript
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+```
+
+Now we can parse the body. Instead of going to a new path we use `redirect` method on `res`. It will run the `app.get('/friends')`.
+
+```javascript
+app.post('/addFriend', (req, res) => {
+    var newFriend = req.body.newFriend
+    friends.push(newFriend)
+    res.redirect('/friends')
+})
+```
