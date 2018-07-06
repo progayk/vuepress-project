@@ -54,6 +54,7 @@ module.exports = {
                 'handling-user-input-with-forms',
                 'understanding-direvtives',
                 'vuejs-animations-and-transitions',
+                'vue-router',
                 'state-management-with-vuex'
             ],
             '/info/': [
