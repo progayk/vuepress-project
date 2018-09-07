@@ -14,6 +14,7 @@ module.exports = {
                 text: 'All Docs',
                 items: [
                     { text: 'Guides', link: '/guides/' },
+                    { text: 'Typography', link: '/typography/' },
                     { text: 'Chain Projects', link: '/chain-project/' },
                     { text: 'Express', link: '/express-framework/' },
                     { text: 'Firebase Docs', link: '/firebase-docs/' },         
@@ -59,6 +60,12 @@ module.exports = {
             ],
             '/info/': [
                 ''
+            ],
+            '/typography/': [
+                '',
+                'typographic-design',
+                'fonts',
+                'web-style-guide'
             ],
             '/yelp-camp-project/': [
                 '',

@@ -174,12 +174,12 @@ import 'firebase/auth'
 
 // firebase init goes here
 const config = {
-  apiKey: 'AIzaSyBukn4hNkegqUU1T2XpOjz7cRaUQyATpJQ',
-  authDomain: 'spaniards-142cc.firebaseapp.com',
-  databaseURL: 'https://spaniards-142cc.firebaseio.com',
-  projectId: 'spaniards-142cc',
-  storageBucket: 'spaniards-142cc.appspot.com',
-  messagingSenderId: '964590281736'
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SEND_ID"
 }
 firebase.initializeApp(config)
 
