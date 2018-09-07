@@ -22,7 +22,7 @@ module.exports = {
                     { text: 'VueJS 2 Course', link: '/vuejs2_course/' },
                     { text: 'NuxtJS', link: '/nuxtjs-course/' },
                     { text: 'API', link: '/API/' },
-                    { text: 'Yelp Camp', link: '/yelp-camp-project/' }
+                    { text: 'Yelp Camp', link: '/yelp-camp-project/' },
                 ]   
             }
         ],
@@ -95,7 +95,8 @@ module.exports = {
             '/firebase-docs/': [
                 '',
                 'cloud-firestore',
-                'ssr-vue-apps-with-nuxtjs'
+                'ssr-vue-apps-with-nuxtjs',
+                'firestore-project'
             ],
             '/API/': [
                 '',
