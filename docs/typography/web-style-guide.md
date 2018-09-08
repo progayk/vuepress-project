@@ -179,8 +179,204 @@ Vertical spacing is created by `line-height`, `margin`, and `padding`.
 
 * Adhere to the [Law of Proximity](/typography/typographic-design.html#gestalt-laws-in-typography).
 
-## Vertical Rhythm
+### Vertical Rhythm
 
 Vertical rhythm is the concept of keeping vertical spaces between elements consistent. It is incredibly important as it helps to create a visually relaxing experience, and evokes a feeling of familiarity to users.
 
 ![vertical-rhythm](http://typographyhandbook.com/assets/images/vertical-rhythm.png)
+
+Establishing a vertical rhythm is simple. First, decide on a base whitespace value that you will use for vertical margins and vertical padding. Then, apply this value as a single-direction margin (or padding) to your containers, textual elements, and other relevant elements. For larger gaps, use a multiple of the base value.
+
+Setting the base vertical spacing to be the same size as the `line-height` will allow every line to fit in an imaginary baseline grid. This is often done to imitate the uniformity of print design. This is not a requirement of vertical rhythm; any value works for base vertical spacing as long as a multiple of it is repeated consistently.
+
+```css
+body { 
+  line-height: 1.4; // Base line height
+}
+
+p { 
+  font-size: 1.25em; // Base font size
+  margin-bottom: 1.75rem; // Base vertical spacing: (1.4 * 1.25) = 1.75
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 3.5rem; // Double the base value for a larger gap (1.75 * 2) = 3.5
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-bottom: 1.75rem;
+}
+
+.page-container {
+  padding: 3.5rem 2rem; // 3.5 is double the base value
+}
+```
+
+```scss
+/* Simple Sass Implementation */
+
+$base-line-height: 1.4;
+$base-font-size: 1.25rem;
+$vertical-rhythm: $base-line-height * $base-font-size;
+
+body { 
+  line-height: $base-line-height;
+}
+
+p { 
+  font-size: $base-font-size;
+  margin-bottom: $vertical-rhythm;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: $vertical-rhythm * 2;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: $vertical-rhythm;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-bottom: $vertical-rhythm;
+}
+
+.page-container {
+  padding: ($vertical-rhythm * 2) 2rem;
+}
+```
+
+Note that `rem` is used for spacing as it is not influenced by the font-size of the element.
+
+### Bottom Aligned Baseline Grid
+
+The bottom aligned baseline grid is a stricter implementation of vertical rhythm. In web, text is vertically aligned to the center of the `line-height`. This can be troublesome for large text as there will be excessive space on the top and the bottom. In print, this issue is avoided as text is aligned to the bottom of the baseline grid.
+
+It's also possible to fix the issue without a baseline grid by applying a negative `margin-top` and a smaller `margin-bottom` to large texts.
+
+![bottom-aligned](http://typographyhandbook.com/assets/images/baseline-grid.png)
+
+There is no easy way to apply a bottom aligned baseline grid that works for different typefaces, `font-size`, and resolutions. It is highly recommended to use a typographic baseline library such as [Sassline](https://sassline.com/) or [MegaType](http://megatype.studiothick.com/).
+
+Remember that vertical rhythm is just a guideline, and that the baseline grid is imaginary. It does not need to be pixel perfect for every element, nor does it need to be followed at every instance.
+
+> FURTHER READINGS:
+
+* [Why is Vertical Rhythm an Important Typography Practice?](http://zellwk.com/blog/why-vertical-rhythms/)
+* [Aligning type to baseline the right way using SASS](https://medium.com/written-in-code/aligning-type-to-baseline-the-right-way-using-sass-e258fce47a9b#.6e9d62xnq)
+* [Is Web Typography Completely Broken?](http://zellwk.com/blog/web-typography-broken/)
+* [Single-direction Margin Declarations](http://csswizardry.com/2012/06/single-direction-margin-declarations/)
+* [Web Typography is broken: here's how we can fix it](http://www.studiothick.com/essays/web-typography-is-broken)
+
+## Color
+
+Color provides a huge visual distinction and is an important part of typography.
+
+* Don't pick colors arbitrarily; use a color palette instead. [Material Design](http://www.materialui.co/colors) colors and [Flat UI colors](http://www.materialui.co/flatuicolors) are good palettes to start with.
+
+* Do not overuse a color too many times, or else they may lose their unique distinction. Do not use too many completely different colors either.
+
+* Adhere to the [Law of Similarity](/typography/typographic-design.html#gestalt-laws-in-typography).
+
+* It is recommended to not use pitch black `#000` as your body text color. Instead, use a very dark gray such as `#333`.
+
+* Sometimes, it is better to use an alpha value or opacity instead of a lighter color. [Click here](http://adamschwartz.co/magic-of-css/chapters/4-color/) for an in-depth explanation.
+
+* Make sure that there is enough contrast between the text and the background. Use this [contrast checker tool](https://contrastchecker.com/) to help you.
+
+> FURTHER READINGS:
+
+* [Magic Of CSS: Color](http://adamschwartz.co/magic-of-css/chapters/4-color/)
+* [Google Style - Color](https://www.google.com/design/spec/style/color.html)
+
+## Underlining
+
+:::tip
+In a printed document, don’t underline. Ever. It’s ugly and it makes text harder to read.
+
+*- [Practical Typography](http://practicaltypography.com/underlining.html)*
+:::
+
+By default, underlines don't look great in the web either. Fortunately, there is a method involving `background-image` to style underlines to make them look appealing. Here is a Sass implementation of the original underline gist by [Adam Schwartz](http://adamschwartz.co/):
+
+```scss
+@mixin text-underline-crop($background) {
+  text-shadow:  .03em 0 $background, 
+                  -.03em 0 $background,
+                  0 .03em $background,
+                  0 -.03em $background,
+                  .06em 0 $background,
+                  -.06em 0 $background,
+                  .09em 0 $background,
+                  -.09em 0 $background,
+                  .12em 0 $background,
+                  -.12em 0 $background,
+                  .15em 0 $background,
+                  -.15em 0 $background;
+}
+
+@mixin text-background($color-bg, $color-text) {
+  background-image: linear-gradient($color-text, $color-text);
+  background-size: 1px 1px;
+  background-repeat: repeat-x;
+  background-position:  0% 95%;
+}
+
+@mixin text-selection($selection) {
+  &::selection {
+    @include text-underline-crop($selection);
+    background: $selection;
+  }
+
+  &::-moz-selection {
+  @include text-underline-crop($selection);
+  background: $selection;
+  }
+}
+
+@mixin link-underline($background, $text, $selection){
+  @include text-underline-crop($background);
+  @include text-background($background, $text);
+  @include text-selection($selection);
+
+  color: $text;
+  text-decoration: none;
+
+  *,
+  *:after,
+  &:after,
+  *:before,
+  &:before {
+    text-shadow: none;
+  }
+
+  &:visited {
+    color: $text;
+  }
+}
+
+/* Example usage */
+a {
+  @include link-underline(#fff, #333, #0BF);
+}
+```
+
+![](http://typographyhandbook.com/assets/images/smartunderline.png)
+
+[SmartUnderline](https://eager.io/showcase/SmartUnderline/) is a library that simplifies the process.
+
+It is highly recommended to reserve underlines only for hyperlinks. This is a trend that the majority of websites follow, and deviating from it may cause confusion.
+
+> FURTHER READINGS:
+* [Crafting Link Underlines On Medium](https://medium.com/designing-medium/crafting-link-underlines-on-medium-7c03a9274f9)
+* [Smarter Link Underlines For Every Website](https://eager.io/blog/smarter-link-underlines/)
+
