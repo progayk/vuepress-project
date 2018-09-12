@@ -1,82 +1,32 @@
 ---
-title: Hanging Around
+title: Nuxt.js Course
 sidebarDepth: 3
 ---
 
-# Hanging Around
+# Nuxt.js Course
+
+**Abstract**
+
 
 ## Credits
-
-* [Someone's fiddle](https://jsfiddle.net/jamesbrndwgn/eywraw8t/176707/). Thank you, man!
 
 ## Content
 
 [[toc]]
 
-## Hanging Around
+## What is Nuxt.js?
 
-In this section I am hanging around with some bit of them and the other. I'm being picky about features. I want to design the next generation User Experience. My people deserve to use something on world standards.
+It makes Vue.js application easier to make. 
 
-### Set Theme Primary Color
+* Builds up on Vue.js
+* Allows Creation of Universal Vue Apps (Server-side Rendering)
+* Configuration via File & Folder Structure
+* NOT a server-side framework
 
-```html
-<template>
-<!--omitted for brevity -->
+### What is Server-side Rendering?
 
-  <!--[START] Locale Toggle Button-->
-    <input type="color" @change="setTheme($event)">
-  <!--[END] Locale Toggle Button-->
+Normally Vue.js runs on the **client-side**. Because of this fact your page will be interactive after all your *javascript* files are sent. This behaviour makes *crawlers* like the Google's only crawl the initial page(HTML), and since the initial page will be empty this approach is NOT good for **SEO**. However, we can render the initial page on the server then send it. So the crawler will crawl and the **SEO** will be preferible. And once the content loaded we will have a very fast application. 
 
-<!--omitted for brevity -->
-</template>
-<script>
-export default {
-  name: "App",
-  data() {
-    return {
-      colorValue: '#aba',
-      // omitted for brevity
-    }
-  },
-  methods: {
-    setTheme(e) {
-      this.$vuetify.theme.primary = e.target.value;
-    }
-  }
-};
-</script>
-```
+The all page is rendered and sent. After that we can fetch data when a request comes by using APIs. This will create a better user experience since the application runs as it was a native app.
 
-## Internatilization (i18n)
-
-### Toggle Locale
-
-```html
-<template>
-<!--omitted for brevity -->
-
-      <!--[START] Locale Toggle Button-->
-      <v-btn icon @click="toggleLocale">
-        {{this.$i18n.locale}}
-      </v-btn>
-      <!--[END] Locale Toggle Button-->
-
-<!--omitted for brevity -->
-</template>
-<script>
-export default {
-  name: "App",
-  data() {
-    return {
-      lang: "en",
-      // omitted for brevity
-    }
-  },
-  methods: {
-    toggleLocale() {
-      this.$i18n.locale = this.$i18n.locale === "tr" ? "en" : "tr";
-    }
-  }
-};
-</script>
-```
+![server-side rendering](../images/server-side-rendering.png)
