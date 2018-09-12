@@ -41,7 +41,7 @@ module.exports = {
                 'vue-flask-quiz',
                 'vuefire-vue-firebase-crud'
             ],
-            'semsis': [
+            '/semsis/': [
                 '',
                 'hanging-around'
             ],
