@@ -68,7 +68,6 @@ export default {
   name: "App",
   data() {
     return {
-      lang: "en",
       // omitted for brevity
     }
   },
