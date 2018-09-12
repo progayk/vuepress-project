@@ -14,6 +14,7 @@ module.exports = {
                 text: 'All Docs',
                 items: [
                     { text: 'Guides', link: '/guides/' },
+                    { text: 'SEMSIS', link: '/semsis/' },
                     { text: 'Typography', link: '/typography/' },
                     { text: 'Chain Projects', link: '/chain-project/' },
                     { text: 'Express', link: '/express-framework/' },
