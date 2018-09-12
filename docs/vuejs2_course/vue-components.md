@@ -35,10 +35,10 @@ We have this setup but it's only rendered once for the first element. Even thoug
 ```javascript
 new Vue({
 	el: '#app',
-  data: {
- 		status: 'Critical'
-  },
-  template: '<p>Server Status: {{ status }}</p>'
+    data: {
+        status: 'Critical'
+    },
+    template: '<p>Server Status: {{ status }}</p>'
 })
 ```
 
@@ -63,11 +63,11 @@ When creating `components` we need to pass `data` property in a different way. S
 ```javascript
 Vue.component('my-component', {
 	data: function() {
-  	return {
-    	status: 'Critical'
-    }
-  },
-  template: '<p>Server Status: {{ status }}</p>'
+        return {
+            status: 'Critical'
+        }
+    },
+    template: '<p>Server Status: {{ status }}</p>'
 })
 
 new Vue({
@@ -104,13 +104,13 @@ var data = { status: 'Critical' }
 
 Vue.component('my-component', {
 	data: function() {
-  	return data
-  },
-  template: '<p>Server Status: {{ status }}<button @click="changeStatus">Change </button></p>',
-  methods: {
-  	changeStatus: function() {
-    	this.status = 'Normal'
-    }
+        return data
+    },
+    template: '<p>Server Status: {{ status }}<button @click="changeStatus">Change </button></p>',
+    methods: {
+        changeStatus: function() {
+            this.status = 'Normal'
+        }
   }
 })
 

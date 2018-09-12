@@ -41,6 +41,10 @@ module.exports = {
                 'vue-flask-quiz',
                 'vuefire-vue-firebase-crud'
             ],
+            'semsis': [
+                '',
+                'hanging-around'
+            ],
             '/vuejs2_course/': [
                 '',
                 'getting-started',
@@ -50,6 +54,7 @@ module.exports = {
                 'vue-instance',
                 'dev-workflow-vuecli-webpack',
                 'vue-components',
+                'vue-class-component',
                 'communicating-between-components',
                 'advanced-component-usage',
                 'handling-user-input-with-forms',
