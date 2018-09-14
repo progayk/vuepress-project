@@ -220,3 +220,14 @@ Add extension panel under the toolbar.
 
 Give Dynamic Title on the extension panel.
 
+## Data Tables
+
+Bekledigimden daha iyi bir Data table cikacak ortaya.
+
+* Sort
+* Inline Edit
+* Pagination
+* Search
+  - [Feature]: Search tarafina chip ekleyebiliriz.
+
+
