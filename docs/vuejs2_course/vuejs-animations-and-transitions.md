@@ -9,6 +9,8 @@ Let's have a better user experience with animations and transitions.
 
 ## Credits
 
+> Check [this tutorial](https://snipcart.com/blog/vuejs-transitions-animations) on snipcart.com also! 
+
 This course in on [this link](https://www.udemy.com/vuejs-2-the-complete-guide/learn/v4/t/lecture/5975260?start=0) on udemy.
 
 How to make Page transition properly?

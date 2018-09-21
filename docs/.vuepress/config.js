@@ -2,6 +2,9 @@ module.exports = {
     title: 'My Documentations',
     description: 'A library with project documents',
     serviceWorker: true,
+    // markdown: {
+    //     lineNumbers: true
+    // },
     themeConfig: {
         search: true,
         searchMaxSuggestions: 10,
@@ -15,6 +18,7 @@ module.exports = {
                 items: [
                     { text: 'Guides', link: '/guides/' },
                     { text: 'SEMSIS', link: '/semsis/' },
+                    { text: 'MayksLab', link: '/mayks_lab/' },
                     { text: 'Typography', link: '/typography/' },
                     { text: 'Chain Projects', link: '/chain-project/' },
                     { text: 'Express', link: '/express-framework/' },
@@ -46,6 +50,10 @@ module.exports = {
                 '',
                 'hanging-around'
             ],
+            '/mayks_lab/': [
+                '',
+                'klinar-sop-learning-module'
+            ],
             '/vuejs2_course/': [
                 '',
                 'getting-started',
@@ -62,7 +70,8 @@ module.exports = {
                 'understanding-direvtives',
                 'vuejs-animations-and-transitions',
                 'vue-router',
-                'state-management-with-vuex'
+                'state-management-with-vuex',
+                'vue-plugins'
             ],
             '/info/': [
                 ''
