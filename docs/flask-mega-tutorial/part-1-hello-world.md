@@ -164,3 +164,16 @@ http://localhost:5000/index
 Do you see the application route mappings in action? The first URL maps to /, while the second maps to /index. Both routes are associated with the only view function in the application, so they produce the same output, which is the string that the function returns. If you enter any other URL you will get an error, since only these two URLs are recognized by the application.
 
 Congratulations, you have completed the first big step to become a web developer!
+
+Before I end this chapter, I want to mention one more thing. Since environment variables aren't remembered across terminal sessions, you may find tedious to always have to set the `FLASK_APP` environment variable when you open a new terminal window. Starting with version 1.0, Flask allows you to register environment variables that you want to be automatically imported when you run the flask command. To use this option you have to install the python-dotenv package:
+
+```bash
+(venv) $ pip install python-dotenv
+```
+
+Then you can just write the environment variable name and value in a .flaskenv file in the top-level directory of the project:
+
+**.flaskenv**: Environment variables for flask command
+```
+FLASK_APP=microblog.py
+```

@@ -18,6 +18,7 @@ module.exports = {
                 items: [
                     { text: 'Guides', link: '/guides/' },
                     { text: 'SEMSIS', link: '/semsis/' },
+                    { text: 'Django', link: '/django/' },
                     { text: 'MayksLab', link: '/mayks_lab/' },
                     { text: 'Typography', link: '/typography/' },
                     { text: 'Chain Projects', link: '/chain-project/' },
@@ -49,6 +50,10 @@ module.exports = {
             '/semsis/': [
                 '',
                 'hanging-around'
+            ],
+            '/django/': [
+                '',
+                'polls-tutorial'
             ],
             '/mayks_lab/': [
                 '',

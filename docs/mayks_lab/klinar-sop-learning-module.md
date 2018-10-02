@@ -41,7 +41,7 @@ overall schema. So, let's start ot discover.
 - [ ] responsive design / mobil uyumlu
 
 - [ ] user permissions.
-- [ ] WYSIWYG Editor. 
+- [ ] WYSIWYG Editor. (Tam olarak aradigim editoru buldum!!!) [https://surmon-china.github.io/vue-quill-editor/](https://surmon-china.github.io/vue-quill-editor/)
   - [ ] HTML Preview
 - [ ] Question creator.
   - [ ] Question pool. (feature)
@@ -68,6 +68,9 @@ overall schema. So, let's start ot discover.
   * base_url/c/sop-for-beginners/learn/title-one/lecture/124ljh1234lj1
   * base_url/c/sop-for-beginners/learn/title-one/lecture/124ljh1234lj1/questions?index=3
   * base_url/c/sop-for-beginners/learn/title-one/questions?index=32
+- [ ] A temporary back-end solution for development. 
+  * (Firebase is the most powerful and also most rapid choice it seems)
+  * Or Flask, since it's easy to start with. But then we won't be able to serve it live.
 
 
   falan filan...
