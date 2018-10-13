@@ -19,7 +19,9 @@ module.exports = {
                     { text: 'Guides', link: '/guides/' },
                     { text: 'SEMSIS', link: '/semsis/' },
                     { text: 'Django', link: '/django/' },
+                    { text: 'Query Languages', link: '/query-languages/' },
                     { text: 'MayksLab', link: '/mayks_lab/' },
+                    { text: 'Golang', link: '/golang/' },
                     { text: 'Typography', link: '/typography/' },
                     { text: 'Chain Projects', link: '/chain-project/' },
                     { text: 'Express', link: '/express-framework/' },
@@ -51,9 +53,16 @@ module.exports = {
                 '',
                 'hanging-around'
             ],
+            '/golang/': [
+                '',
+            ],
             '/django/': [
                 '',
                 'polls-tutorial'
+            ],
+            '/query-languages/': [
+                '',
+                'structured-query-languages'
             ],
             '/mayks_lab/': [
                 '',
