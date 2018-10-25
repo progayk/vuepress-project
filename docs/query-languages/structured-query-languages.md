@@ -63,7 +63,7 @@ The common practice is to write sql commands in upper-case. It's useful when deb
 You have to end each statement with semicolon (`;`). This is how SQLite understans that your statement ends. 
 :::
 
-For each table in a database we need to add an extra column `id INTEGER PRIMARY KEY` for **unique identifier**. This is needed to query the database, because the other columns are subject to change so it's not useful to use them for querying. Here we have `id`, `name` and `quantity` as column names. We define their **type** to inform the database what kind of information will be stored. It's neccessary beacuse the database can handle efficiently values and memory based on types. On the table above we defined `id` as `INTEGER`; `name` as `TEXT`; `quantity` as `INTEGER`. 
+For each table in a database we need to add an extra column `id INTEGER PRIMARY KEY` for **unique identifier**. This is needed to query the database, because the other columns are subject to change so it's not useful to use them for querying. Here, we have `id`, `name` and `quantity` as column names. We define their **type** to inform the database what kind of information will be stored. It's neccessary beacuse the database can handle efficiently values and memory based on types. On the table above we defined `id` as `INTEGER`; `name` as `TEXT`; `quantity` as `INTEGER`. 
 
 ## Inserting Data
 
@@ -74,3 +74,4 @@ INSERT INTO groceries VALUES (1, "apple", 4);
 ```
 
 In the statement above, we tell SQLite to insert given values into `groceries` table.
+
